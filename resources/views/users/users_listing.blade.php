@@ -65,7 +65,7 @@
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Veprime<span class="caret"></span></button>
                                             <ul class="dropdown-menu">
                                                 <li><a href="{{url('edit_user',$user->id)}}"><i class="fa fa-edit"></i>Ndrysho</a></li>
-                                                <li><a data-userName = {{ $user->name }} data-id = {{ $user->id }} class="delete_user" onclick="deleteFunction(this)">
+                                                <li><a data-userName = {{ $user->name }} class="delete_user" onclick="deleteFunction(this)"  data-id = {{ $user->id }}>
                                                     <i class="fa fa-trash"></i>Fshij
                                                     </a>
                                                 </li>
