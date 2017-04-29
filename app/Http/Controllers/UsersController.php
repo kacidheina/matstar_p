@@ -81,7 +81,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.edit_user', ['user' =>$user]);
     }
 
     /**
@@ -93,7 +93,26 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $validator = Validator::make($request->all(),
+            [
+                'name' => 'required|min:4',
+                'email' => 'required',
+                'status' => 'required',
+                'password' => 'required|min:8'
+            ]);
+        if ($validator->fails()) {return redirect()->back()->with('error','Te dhenat nuk u futen ne formatin e duhur.');}
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->status = $request->status;
+        $user->password = $request->password;
+        $user->user_modify_id = Auth::user()->id;
+        $user->updated_at = date("Y-m-d H:i:s");
+
+        if ($user->save())
+        {return redirect('users')->with('success','Perdoruesi u ndryshua me sukses.');}
+        else
+        {return redirect()->back()->with('error','Dicka shkoi gabim. Provoni perseri.');}
     }
 
     /**
