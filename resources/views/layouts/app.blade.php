@@ -1,46 +1,60 @@
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
 <html lang="{{ config('app.locale') }}">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>@yield('title')</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta content="" name="description" />
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="current-route" content="{{$current_route = Route::currentRouteName()}}">
     <meta name="base-url" content="{{$base_url = URL::to('/')}}">
-    <meta content="Marlind Parllaku" name="author" />
-    <script>window.Laravel = {!! json_encode(['csrfToken' => csrf_token(), ]) !!}; var super_path = '{{URL::to('/')}}';</script>
+    <meta content="Marlind Parllaku" name="author"/>
+    <script>window.Laravel = {!! json_encode(['csrfToken' => csrf_token(), ]) !!};
+        var super_path = '{{URL::to('/')}}';</script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('assets/global/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('assets/global/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('assets/global/plugins/uniform/css/uniform.default.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{URL::asset('assets/global/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{URL::asset('assets/global/plugins/simple-line-icons/simple-line-icons.min.css')}}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{URL::asset('assets/global/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{URL::asset('assets/global/plugins/uniform/css/uniform.default.css')}}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{URL::asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet"
+          type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <link href="{{URL::asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-    @yield('page_level_plugins_head')
-    <!-- END PAGE LEVEL PLUGINS -->
+    <link href="{{URL::asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{URL::asset('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet"
+          type="text/css"/>
+@yield('page_level_plugins_head')
+<!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="{{URL::asset('assets/global/css/components.min.css')}}" rel="stylesheet" id="style_components" type="text/css" />
-    <link href="{{URL::asset('assets/global/css/plugins.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{URL::asset('assets/global/css/components.min.css')}}" rel="stylesheet" id="style_components"
+          type="text/css"/>
+    <link href="{{URL::asset('assets/global/css/plugins.min.css')}}" rel="stylesheet" type="text/css"/>
     <!-- END THEME GLOBAL STYLES -->
-    @yield('page_level_styles_head')
-    <!-- BEGIN THEME LAYOUT STYLES -->
-    <link href="{{URL::asset('assets/layouts/layout/css/layout.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('assets/layouts/layout/css/themes/darkblue.min.css')}}" rel="stylesheet" type="text/css" id="style_color" />
-    <link href="{{URL::asset('assets/layouts/layout/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('assets/custom/custom.css')}}" rel="stylesheet" type="text/css" />
+@yield('page_level_styles_head')
+<!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="{{URL::asset('assets/layouts/layout/css/layout.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{URL::asset('assets/layouts/layout/css/themes/darkblue.min.css')}}" rel="stylesheet" type="text/css"
+          id="style_color"/>
+    <link href="{{URL::asset('assets/layouts/layout/css/custom.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{URL::asset('assets/custom/custom.css')}}" rel="stylesheet" type="text/css"/>
     <!-- END THEME LAYOUT STYLES -->
-    <link rel="shortcut icon" href="favicon.ico" /> </head>
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
 <!-- END HEAD -->
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
@@ -51,28 +65,75 @@
         <!-- BEGIN LOGO -->
         <div class="page-logo">
             <a href="index.html">
-                <img src="{{URL::asset('assets/layouts/layout/img/logo.png')}}" alt="logo" class="logo-default" /> </a>
-            <div class="menu-toggler sidebar-toggler"> </div>
+                <img src="{{URL::asset('assets/layouts/layout/img/logo.png')}}" alt="logo" class="logo-default"/> </a>
+            <div class="menu-toggler sidebar-toggler"></div>
         </div>
         <!-- END LOGO -->
         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
+           data-target=".navbar-collapse"> </a>
         <!-- END RESPONSIVE MENU TOGGLER -->
         <!-- BEGIN TOP NAVIGATION MENU -->
         <div class="top-menu">
             <ul class="nav navbar-nav pull-right">
                 <!-- BEGIN NOTIFICATION DROPDOWN -->
+                <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                    <a href="javascript:;" class="dropdown-toggle eur-curse" data-toggle="dropdown" data-hover="dropdown"
+                       data-close-others="true">
+                        <div class="alert alert-warning curse-euro-title">
+                            <strong>Kursi</strong> : 1 EUR = <span id="course_bar_lev">{{$curse_lev}}</span> LEV = <span id="course_bar_lek">{{$curse_lek}}</span> LEK
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="external">
+                            <h3><span class="bold">Ndrysho Kursin e Euros.</span></h3>
+                        </li>
+                        <li>
+                            <ul class="dropdown-menu-list scroller" style="height: 150px;" data-handle-color="#637283">
+                                <li>
+                                    <form role="form" id="curse" style="padding-top: 10px;">
+                                        <div class="form-body">
+                                            <label class="col-md-4 label-eur"> 1 EUR =  </label>
+                                            <div class="form-group col-md-4">
+                                                <input type="text" name="course_lev" id="course_lev" class="form-control " value="{{$curse_lev}}" placeholder="">
+                                            </div>
+                                            <label class="col-md-4 label-lev"> LEV  </label>
+                                            <div class="col-md-12"></div>
+                                            <label class="col-md-4 label-eur"> 1 EUR =  </label>
+                                            <div class="form-group col-md-4">
+                                                <input type="text" name="course_lek" id="course_lek" class="form-control " value="{{$curse_lek}}" placeholder="">
+                                            </div>
+                                            <label class="col-md-4 label-lek"> LEK  </label>
+                                            <div class="col-md-12"></div>
+                                            <div class="form-group col-md-4 curse-euro-submit">
+                                                <input type="submit" class="btn btn-success" value="Ndrysho">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- END NOTIFICATION DROPDOWN -->
+                <!-- BEGIN NOTIFICATION DROPDOWN -->
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                 <li class="dropdown dropdown-user">
-                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                        <img alt="" class="img-circle" src="{{URL::asset('assets/pages/img/avatars/user_avatar.png')}}" />
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                       data-close-others="true">
+                        <img alt="" class="img-circle"
+                             src="{{URL::asset('assets/pages/img/avatars/user_avatar.png')}}"/>
                         <span class="username username-hide-on-mobile"> {{ Auth::user()->name }} </span>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-default">
                         <li><a href=""> <i class="icon-user"></i> My Profile </a></li>
-                        <li><a  href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="icon-key"></i> Log Out </a></li>
+                        <li><a href="{{ route('logout') }}"
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i
+                                        class="icon-key"></i> Log Out </a></li>
                     </ul>
                 </li>
                 <!-- END USER LOGIN DROPDOWN -->
@@ -87,7 +148,7 @@
 </div>
 <!-- END HEADER -->
 <!-- BEGIN HEADER & CONTENT DIVIDER -->
-<div class="clearfix"> </div>
+<div class="clearfix"></div>
 <!-- END HEADER & CONTENT DIVIDER -->
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
@@ -104,11 +165,12 @@
             <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
             <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
             <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-            <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+            <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true"
+                data-slide-speed="200" style="padding-top: 20px">
                 <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
                 <li class="sidebar-toggler-wrapper hide">
                     <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-                    <div class="sidebar-toggler"> </div>
+                    <div class="sidebar-toggler"></div>
                     <!-- END SIDEBAR TOGGLER BUTTON -->
                 </li>
                 <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
@@ -139,7 +201,7 @@
                 </li>
                 <li class="nav-item @if($current_route == 'clients')  active open  @endif">
                     <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class= "fa fa-handshake-o"></i>
+                        <i class="fa fa-handshake-o"></i>
                         <span class="title">Klientet</span>
                         <span class="arrow"></span>
                     </a>
@@ -260,8 +322,8 @@
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <!-- BEGIN CONTENT BODY -->
-        @yield('content')
-        <!-- END CONTENT BODY -->
+    @yield('content')
+    <!-- END CONTENT BODY -->
     </div>
     <!-- END CONTENT -->
 </div>
@@ -269,13 +331,17 @@
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
     <div class="page-footer-inner"> 2017 &copy; Panel Demo
-        <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
+        <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes"
+           title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase
+            Metronic!</a>
     </div>
     <div class="scroll-to-top">
         <i class="icon-arrow-up"></i>
     </div>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> {{ csrf_field() }}</form>
-    <div id="toast-container" class="toast-top-right" aria-live="polite" role="alert">@include('partials.messages')</div>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+          style="display: none;"> {{ csrf_field() }}</form>
+    <div id="toast-container" class="toast-top-right" aria-live="polite"
+         role="alert">@include('partials.messages')</div>
 </div>
 <!-- END FOOTER -->
 <!--[if lt IE 9]>
@@ -287,14 +353,18 @@
 <script src="{{URL::asset('assets/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
 <script src="{{URL::asset('assets/global/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
 <script src="{{URL::asset('assets/global/plugins/js.cookie.min.js')}}" type="text/javascript"></script>
-<script src="{{URL::asset('assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js')}}" type="text/javascript"></script>
-<script src="{{URL::asset('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
+<script src="{{URL::asset('assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js')}}"
+        type="text/javascript"></script>
+<script src="{{URL::asset('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}"
+        type="text/javascript"></script>
 <script src="{{URL::asset('assets/global/plugins/jquery.blockui.min.js')}}" type="text/javascript"></script>
 <script src="{{URL::asset('assets/global/plugins/uniform/jquery.uniform.min.js')}}" type="text/javascript"></script>
-<script src="{{URL::asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+<script src="{{URL::asset('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"
+        type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="{{URL::asset('assets/global/plugins/bootstrap-toastr/toastr.min.js')}}" type="text/javascript"></script>
+<script src="{{URL::asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
 <script src="{{URL::asset('assets/custom/custom.js')}}" type="text/javascript"></script>
 @yield('page_level_plugins_foot')
 <!-- END PAGE LEVEL PLUGINS -->
@@ -310,7 +380,14 @@
 <script src="{{URL::asset('assets/layouts/layout/scripts/layout.min.js')}}" type="text/javascript"></script>
 <script src="{{URL::asset('assets/layouts/layout/scripts/demo.min.js')}}" type="text/javascript"></script>
 <script src="{{URL::asset('assets/layouts/global/scripts/quick-sidebar.min.js')}}" type="text/javascript"></script>
+<script src="{{URL::asset('assets/pages/scripts/form-validation.js')}}" type="text/javascript"></script>
+
 <!-- END THEME LAYOUT SCRIPTS -->
+
+<script>
+
+
+</script>
 
 </body>
 
