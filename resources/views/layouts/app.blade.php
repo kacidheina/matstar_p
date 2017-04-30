@@ -18,7 +18,8 @@
     <meta name="base-url" content="{{$base_url = URL::to('/')}}">
     <meta content="Marlind Parllaku" name="author"/>
     <script>window.Laravel = {!! json_encode(['csrfToken' => csrf_token(), ]) !!};
-        var super_path = '{{URL::to('/')}}'; var course_lek = {{$curse_lek}}; var course_lev = {{$curse_lev}};</script>
+        var super_path = '{{URL::to('/')}}'; var course_lek = {{$curse_lek}}; var course_lev = {{$curse_lev}};
+    </script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
           type="text/css"/>
@@ -64,7 +65,7 @@
     <div class="page-header-inner ">
         <!-- BEGIN LOGO -->
         <div class="page-logo">
-            <a href="index.html">
+            <a href="{{ url('/') }}">
                 <img src="{{URL::asset('assets/layouts/layout/img/logo.png')}}" alt="logo" class="logo-default"/> </a>
             <div class="menu-toggler sidebar-toggler"></div>
         </div>
@@ -175,7 +176,7 @@
                 </li>
                 <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
                 <li class="nav-item start @if($current_route == '/' or $current_route == 'home')  active open  @endif">
-                    <a href="" class="nav-link nav-toggle">
+                    <a href="{{ url('/') }}" class="nav-link nav-toggle">
                         <i class="icon-home"></i>
                         <span class="title">Faqja Kryesore</span>
                     </a>

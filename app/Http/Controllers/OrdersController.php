@@ -28,7 +28,11 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        $products = Product::with(array('category' => function($query){$query->select('id','name');}))->get();
+        $products = Product::with(array('category' =>
+            function($query)
+            {$query->select('id','name');
+            }))
+            ->get();
         $clients = Client::where('delete','no')->get();
 
         return view('orders.create_order',['products'=>$products,'clients'=>$clients]);

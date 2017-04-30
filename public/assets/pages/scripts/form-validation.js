@@ -155,7 +155,7 @@ var FormValidation = function () {
                     required: jQuery.validator.format("Email i perdoruesit eshte i domosdoshem.")
                 },
                 status: {
-                    required: jQuery.validator.format("Qyteti i perdoruesit eshte i domosdoshem.")
+                    required: jQuery.validator.format("Statusi i perdoruesit eshte i domosdoshem.")
                 } ,
                 password: {
                     required: jQuery.validator.format("Password i perdoruesit eshte i domosdoshem."),

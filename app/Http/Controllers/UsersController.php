@@ -46,6 +46,7 @@ class UsersController extends Controller
                 'status' => 'required',
                 'password' => 'required|min:8'
             ]);
+
         if ($validator->fails()) {return redirect()->back()->with('error','Te dhenat nuk u futen ne formatin e duhur.');}
 
         $user = new User();
@@ -105,7 +106,7 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->status = $request->status;
-        $user->password = $request->password;
+        $user->password = bcrypt($request->password);
         $user->user_modify_id = Auth::user()->id;
         $user->updated_at = date("Y-m-d H:i:s");
 
@@ -127,8 +128,14 @@ class UsersController extends Controller
             $user->delete = 'yes';
             $user->user_modify_id = Auth::user()->id;
             $user->updated_at = date('Y-m-d H:i:s');
-            $user->save();
-            return response()->json(['message' => 'Perdorues u fshi me sukses','error' => 'false']);
+
+            if ($user->save())
+            {return redirect('users')->with('success','Perdoruesi u fshi me sukses.');}
+            else
+            {return redirect()->back()->with('error','Dicka shkoi gabim. Provoni perseri.');}
+        }
+        else{
+            return redirect()->back()->with('error','Nuk u gjet asnje perdorues me kete id.Dicka shkoi gabim. Provoni perseri.');
         }
     }
 }

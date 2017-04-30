@@ -96,7 +96,12 @@
     <script src="{{URL::asset('assets/pages/scripts/table-datatables-colreorder.js')}}" type="text/javascript"></script>
     <script>
         function myFunction() {
-            confirm("Ky artikull do te fshihet , jeni te sigurt qe doni te vazhdoni? ");
+            if(confirm("Ky artikull do te fshihet , jeni te sigurt qe doni te vazhdoni? ")){
+
+            }
+            else{
+                return false;
+            }
         }
     </script>
 @endsection
