@@ -17,7 +17,10 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = DB::select('SELECT p.`id`, p.`id_category`, c.`name` as `category`, p.`code`, p.`color`, p.`numbering`, p.`price_bought`, p.`price_with_customs`, p.`price_wholesale`, p.`price_customer`, p.`quantity`, p.`description`, p.`note`, uc.`name` AS `creator`, um.`name` AS `modifier`, p.`created_at`, p.`updated_at` FROM `products` p LEFT JOIN `categories` c ON p.`id_category` = c.`id` LEFT JOIN `users` uc ON p.`user_create_id` = uc.`id` LEFT JOIN `users` um ON p.`user_modify_id` = uc.`id` WHERE p.`delete` = \'no\'');
+        //$products = DB::select('SELECT p.`id`, p.`id_category`, c.`name` as `category`, p.`code`, p.`color`, p.`numbering`, p.`price_bought`, p.`price_with_customs`, p.`price_total`, p.`quantity`, p.`description`, p.`note`, uc.`name` AS `creator`, um.`name` AS `modifier`, p.`created_at`, p.`updated_at` FROM `products` p LEFT JOIN `categories` c ON p.`id_category` = c.`id` LEFT JOIN `users` uc ON p.`user_create_id` = uc.`id` LEFT JOIN `users` um ON p.`user_modify_id` = uc.`id` WHERE p.`delete` = \'no\'');
+
+        $products = Product::with('category')->with('creator')->with('modifier')->get();
+        //return $products;
         return view('products.products_listing',['products'=>$products]);
     }
 
@@ -49,8 +52,7 @@ class ProductsController extends Controller
             'numbering_to' => 'required',
             'price_bought' => 'required',
             'price_customs' => 'required',
-            'price_wholesale' => 'required',
-            'price_customer' => 'required'
+            'price_total' => 'required'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('error','Te dhenat nuk u futen ne formatin e duhur.');
@@ -64,8 +66,7 @@ class ProductsController extends Controller
         $product->numbering = $request->numbering_from.'-'.$request->numbering_to;
         $product->price_bought = $request->price_bought;
         $product->price_with_customs = $request->price_customs;
-        $product->price_wholesale = $request->price_wholesale;
-        $product->price_customer = $request->price_customer;
+        $product->price_total = $request->price_total;
         $product->note = $request->note;
         $product->description = $request->description;
         $product->user_create_id = Auth::user()->id;
@@ -118,13 +119,11 @@ class ProductsController extends Controller
             'numbering_to' => 'required',
             'price_bought' => 'required',
             'price_customs' => 'required',
-            'price_wholesale' => 'required',
-            'price_customer' => 'required'
+            'price_total' => 'required',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->with('error','Te dhenat nuk u futen ne formatin e duhur.');
         }
-
 
         $product->code = $request->code;
         $product->id_category = $request->category;
@@ -133,8 +132,7 @@ class ProductsController extends Controller
         $product->numbering = $request->numbering_from.'-'.$request->numbering_to;
         $product->price_bought = $request->price_bought;
         $product->price_with_customs = $request->price_customs;
-        $product->price_wholesale = $request->price_wholesale;
-        $product->price_customer = $request->price_customer;
+        $product->price_total = $request->price_total;
         $product->note = $request->note;
         $product->description = $request->description;
         $product->user_modify_id = Auth::user()->id;

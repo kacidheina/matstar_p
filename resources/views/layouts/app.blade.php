@@ -18,7 +18,7 @@
     <meta name="base-url" content="{{$base_url = URL::to('/')}}">
     <meta content="Marlind Parllaku" name="author"/>
     <script>window.Laravel = {!! json_encode(['csrfToken' => csrf_token(), ]) !!};
-        var super_path = '{{URL::to('/')}}';</script>
+        var super_path = '{{URL::to('/')}}'; var course_lek = {{$curse_lek}}; var course_lev = {{$curse_lev}};</script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
           type="text/css"/>

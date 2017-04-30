@@ -47,27 +47,25 @@
                                 <th> Kodi </th>
                                 <th> Ngjyra </th>
                                 <th> Numeracioni </th>
-                                <th> Cmim Blerje</th>
-                                <th> Cmim Dogane</th>
-                                <th> Cmim Shumice</th>
-                                <th> Cmim Klienti</th>
+                                <th> Cmim Blerje (LEV)</th>
+                                <th> Cmim Dogane (LEK)</th>
+                                <th> Cmim Total (LEK)</th>
                                 <th> Sasia </th>
                                 <th> Kategoria </th>
                                 <th> Veprime </th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($products as $key=>$product)
+                            @foreach($products as $product)
                                 <tr>
                                     <td> {{$product->code}}</td>
                                     <td> {{$product->color}}</td>
                                     <td> {{$product->numbering}}</td>
                                     <td> {{$product->price_bought}}</td>
                                     <td> {{$product->price_with_customs}}</td>
-                                    <td> {{$product->price_wholesale}}</td>
-                                    <td> {{$product->price_customer}}</td>
+                                    <td> {{$product->price_total}}</td>
                                     <td> {{$product->quantity}}</td>
-                                    <td> {{$product->category}}</td><td>
+                                    <td> {{$product->category->name}}</td><td>
                                         <div class="dropdown">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Veprime<span class="caret"></span></button>
                                             <ul class="dropdown-menu">

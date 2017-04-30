@@ -23,7 +23,12 @@ class Product extends Model
         });
     }
 
-
     public function category()
     {return $this->belongsTo('App\Category', 'id_category' );}
+
+    public function creator()
+    {return $this->belongsTo('App\User', 'user_create_id' );}
+
+    public function modifier()
+    {return $this->belongsTo('App\User', 'user_modify_id' );}
 }
