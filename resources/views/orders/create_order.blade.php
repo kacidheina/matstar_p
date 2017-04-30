@@ -8,10 +8,8 @@
     <link href="{{URL::asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{URL::asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css"/>
 
-
     <link href="{{URL::asset('assets/global/plugins/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{URL::asset('assets/global/plugins/select2/css/select2-bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-
 @endsection
 @section('content')
     <div class="page-content">
@@ -57,7 +55,7 @@
                                             <select id="product_dorpdown" class="form-control select2">
                                                 <option value="">Zgjidh Produtin</option>
                                                 @foreach($products as $product)
-                                                    <option value="{{$product->id}}" data-content="{{json_encode(['id'=> $product->id,'code'=> $product->code, 'price_wholesale'=> $product->price_wholesale, 'price_customer'=> $product->price_customer])}}">{{$product->code}} </option>
+                                                    <option value="{{$product->id}}" data-content="{{json_encode(['id'=> $product->id,'code'=> $product->code, 'price_total'=> $product->price_total ])}}">{{$product->code}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -194,27 +192,6 @@
                             <button type="submit" class="btn green" id="save_client">Ruaj</button>
                         </div>
                     </form>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <div class="modal fade bs-modal-sm" id="small" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                        <h4 class="modal-title">Zgjidhni Cmimin</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="radio-list sel_price">
-                            <label class="radio-inline">
-                                <input type="radio" name="optionsRadios" id="wholesale" value="option1"> Shumice </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="optionsRadios" id="client" value="option2"> Pakice </label>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- /.modal-content -->
