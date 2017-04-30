@@ -94,34 +94,26 @@
                                     <div class="col-md-6">
                                         <input type="text" name="quantity"  data-required="1" class="form-control" value="{{$product->quantity}}" placeholder="Vendos sasine e artikullit"/> </div>
                                 </div>
-
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Cmimi i Blerjes
+                                    <label class="control-label col-md-3">Cmimi i Blerjes (LEV)
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" name="price_bought"  data-required="1" class="form-control" value="{{$product->price_bought}}" placeholder="Vendos cmimin me te cilin u ble artikulli"/> </div>
+                                        <input type="text" name="price_bought" id="price_bought" data-required="1" class="form-control" value="{{$product->price_bought}}" placeholder="Vendos cmimin me te cilin u ble artikulli"/> </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Cmimi me Dogane
+                                    <label class="control-label col-md-3">Dogana (LEK)
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" name="price_customs"  data-required="1" class="form-control" value="{{$product->price_with_customs}}" placeholder="Vendos cmimin pas zhdganimit te artikullit"/> </div>
+                                        <input type="text" name="price_customs" id="price_customs" data-required="1" class="form-control" value="{{$product->price_with_customs}}" placeholder="Vendos tarifen doganore per artikullin"/> </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Cmimi i Shumices
+                                    <label class="control-label col-md-3">Cmimi Total (LEK)
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" name="price_wholesale"  data-required="1" class="form-control" value="{{$product->price_wholesale}}" placeholder="Vendos cmimin e shumices per artikullin"/> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">Cmimi i Klientit
-                                        <span class="required"> * </span>
-                                    </label>
-                                    <div class="col-md-6">
-                                        <input type="text" name="price_customer"  data-required="1" class="form-control" value="{{$product->price_customer}}" placeholder="Vendos cmimin per klientin per artikullin"/> </div>
+                                        <input type="text" name="price_total" id="price_total" readonly data-required="1" class="form-control" value="{{$product->price_total}}" placeholder="Cmimi total i artikullit"/> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Description
@@ -159,12 +151,31 @@
 @endsection
 @section('page_level_plugins_foot')
     <script src="{{URL::asset('assets/global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
-    <script src="{{URL::asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js')}}" type="text/javascript"></script>
 @endsection
 @section('page_level_scripts_foot')
-    <script src="{{URL::asset('assets/pages/scripts/form-validation.js')}}" type="text/javascript"></script>
+    <script>
+        $('#price_bought').keyup(function ()
+            {
+                if ($('#price_customs').val() != ''){
+                    var total_price = ($('#price_bought').val() * course_lek / course_lev ) ;
+                    total_price = total_price + Number($('#price_customs').val());
+                    $('#price_total').val(total_price.toFixed(2));
+                }
+            }
+        );
+
+        $('#price_customs').keyup(function ()
+            {
+                if ($('#price_bought').val() != ''){
+                    var total_price = ($('#price_bought').val() * course_lek / course_lev ) ;
+                    total_price = total_price + Number($('#price_customs').val());
+                    $('#price_total').val(total_price.toFixed(2));
+                }
+            }
+        );
+    </script>
 @endsection

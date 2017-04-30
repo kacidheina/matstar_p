@@ -318,11 +318,8 @@ var FormValidation = function () {
                 price_customs: {
                     required: jQuery.validator.format("Cmimi me dogane  eshte i domosdoshem."),
                 },
-                price_wholesale: {
-                    required: jQuery.validator.format("Cmimi i shumices eshte i domosdoshem."),
-                },
-                price_customer: {
-                    required: jQuery.validator.format("Cmimi i klientit eshte i domosdoshem."),
+                price_total: {
+                    required: jQuery.validator.format("Cmimi i total eshte i domosdoshem."),
                 },
                 numbering_from: {
                     required: jQuery.validator.format("Numri me i vogel eshte i domosdoshem."),
@@ -351,16 +348,13 @@ var FormValidation = function () {
                 price_customs: {
                     required: true
                 },
-                price_wholesale: {
+                price_total: {
                     required: true
                 },
                 numbering_from: {
                     required: true
                 },
                 numbering_to: {
-                    required: true
-                },
-                price_customer: {
                     required: true
                 }
 
@@ -555,6 +549,8 @@ var FormValidation = function () {
                             {
                                 $('#course_bar_lev').text(data.course_lev);
                                 $('#course_bar_lek').text(data.course_lek);
+                                course_lek = data.course_lek;
+                                course_lev = data.course_lev;
                             }
                         }
                     });

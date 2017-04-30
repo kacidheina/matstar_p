@@ -87,7 +87,6 @@
                                         <input type="text" name="numbering_to"  data-required="1" class="form-control" placeholder="Numri me i madh"/>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Sasia
                                         <span class="required"> * </span>
@@ -95,27 +94,26 @@
                                     <div class="col-md-6">
                                         <input type="text" name="quantity"  data-required="1" class="form-control" placeholder="Vendos sasine e artikullit"/> </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Cmimi i Blerjes (LEV)
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" name="price_bought"  data-required="1" class="form-control" placeholder="Vendos cmimin me te cilin u ble artikulli"/> </div>
+                                        <input type="text" name="price_bought" id="price_bought" data-required="1" class="form-control" placeholder="Vendos cmimin me te cilin u ble artikulli"/> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Dogana (LEK)
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" name="price_customs"  data-required="1" class="form-control" placeholder="Vendos tarifen doganore per artikullin"/> </div>
+                                        <input type="text" name="price_customs" id="price_customs" data-required="1" class="form-control" placeholder="Vendos tarifen doganore per artikullin"/> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Cmimi Total (LEK)
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-6">
-                                        <input type="text" name="price_wholesale"  readonly data-required="1" class="form-control" placeholder="Cmimi total i artikullit"/> </div>
+                                        <input type="text" name="price_total" id="price_total" readonly data-required="1" class="form-control" placeholder="Cmimi total i artikullit"/> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Pershkrim
@@ -158,5 +156,25 @@
     <script src="{{URL::asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js')}}" type="text/javascript"></script>
 @endsection
 @section('page_level_scripts_foot')
+    <script>
+        $('#price_bought').keyup(function ()
+            {
+                if ($('#price_customs').val() != ''){
+                    var total_price = ($('#price_bought').val() * course_lek / course_lev ) ;
+                    total_price = total_price + Number($('#price_customs').val());
+                    $('#price_total').val(total_price.toFixed(2));
+                }
+            }
+        );
 
+        $('#price_customs').keyup(function ()
+            {
+                if ($('#price_bought').val() != ''){
+                    var total_price = ($('#price_bought').val() * course_lek / course_lev ) ;
+                    total_price = total_price + Number($('#price_customs').val());
+                    $('#price_total').val(total_price.toFixed(2));
+                }
+            }
+        );
+    </script>
 @endsection
