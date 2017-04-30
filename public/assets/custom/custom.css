@@ -1,3 +1,23 @@
-.clients_check_label {
+.eur-curse{
+    padding-top: 7px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 7px !important;
+}
 
+.curse-euro-title{
+    margin-bottom: 0 !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+.curse-euro-submit{
+    float: right;
+    margin-right: 15px;
+}
+
+.label-lek , .label-eur , .label-lev {
+    padding-top: 8px;
 }

@@ -85,4 +85,10 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
+
+
+
+
+    Route::post('/update_course',array('as' => 'update_course','uses' => 'SystemVariablesController@update_course'));
+
 });
