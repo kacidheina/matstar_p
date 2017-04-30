@@ -62,12 +62,18 @@
                                     <div class="col-md-4">
                                         <input type="text" name="email"  data-required="1" class="form-control" /> </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Status
                                         <span class="required"> * </span>
                                     </label>
                                     <div class="col-md-4">
-                                        <input type="text" name="status"  data-required="1" class="form-control" /> </div>
+                                        <select id="status" name="status" class="form-control select2">
+                                            <option value="">Zgjidh...</option>
+                                                <option value="active">Akiv</option>
+                                                <option value="inactive">Jo Aktiv</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Password
@@ -104,5 +110,4 @@
 @endsection
 @section('page_level_scripts_foot')
     <script src="{{URL::asset('assets/pages/scripts/components-bootstrap-select.min.js')}}" type="text/javascript"></script>
-    <script src="{{URL::asset('assets/pages/scripts/form-validation.js')}}" type="text/javascript"></script>
 @endsection
