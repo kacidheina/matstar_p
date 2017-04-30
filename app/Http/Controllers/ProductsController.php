@@ -157,8 +157,8 @@ class ProductsController extends Controller
         $product->updated_at = date("Y-m-d H:i:s");
 
         if ($product->save())
-        {return redirect('products')->with('success','Artikulli u fshi me sukses.');}
+        {return response()->json(['error' => 'false', 'message' => 'Artikulli u fshi me sukses']);}
         else
-        {return redirect()->back()->with('error','Dicka shkoi gabim. Provoni perseri.');}
+        {return response()->json(['error' => 'true', 'message' => 'Dicka shkoi gabim.Provojeni perseri']);}
     }
 }

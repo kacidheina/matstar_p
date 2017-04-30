@@ -117,6 +117,8 @@
                         }
                     });
 
+            }else{
+                return false;
             }
         }
     </script>

@@ -57,7 +57,7 @@
                             </thead>
                             <tbody>
                             @foreach($products as $product)
-                                <tr>
+                                <tr id="idRow{{$product->id}}">
                                     <td> {{$product->code}}</td>
                                     <td> {{$product->color}}</td>
                                     <td> {{$product->numbering}}</td>
@@ -70,7 +70,7 @@
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Veprime<span class="caret"></span></button>
                                             <ul class="dropdown-menu">
                                                 <li><a href="{{url('edit_product',$product->id)}}"><i class="fa fa-edit"></i>Ndrysho</a></li>
-                                                <li><a href="{{url('delete_product',$product->id)}}" class="delete_category" onclick="myFunction()"><i class="fa fa-trash"></i>Fshij</a></li>
+                                                <li><a data-id = {{ $product->id }} class="delete_category" ><i class="fa fa-trash"></i>Fshij</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -95,13 +95,32 @@
 @section('page_level_scripts_foot')
     <script src="{{URL::asset('assets/pages/scripts/table-datatables-colreorder.js')}}" type="text/javascript"></script>
     <script>
-        function myFunction() {
+        $('.delete_category').on('click', function () {
             if(confirm("Ky artikull do te fshihet , jeni te sigurt qe doni te vazhdoni? ")){
+                var id = $(this).attr('data-id');
+                $.ajax(
+                    {
+                        url:'{{ url('delete_product') }}' + '/' + id,
+                        type: 'GET',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: {
+                            "id": id
+                        },
+                        success: function (data)
+                        {
+                            console.log(data.error);
+                            if(data.error){
 
+                                $('#idRow'+id).remove();
+                            }
+
+                        }
+                    });
             }
             else{
                 return false;
             }
-        }
+        });
+
     </script>
 @endsection
