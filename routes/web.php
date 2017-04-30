@@ -22,11 +22,11 @@ Route::group(['middleware' => 'auth'], function () {
     /************************************** Users Routes ****************************************/
     Route::get('/users',array('as' => 'users','uses' => 'UsersController@index'));
     Route::get('/view_user/{user}',array('as' => 'view_user','uses' => 'UsersController@show'));
-    Route::get('/create_user',array('as' => 'create_product','uses' => 'UsersController@create'));
-    Route::post('/add_user',array('as' => 'add_product','uses' => 'UsersController@store'));
-    Route::get('/edit_user/{user}',array('as' => 'edit_product','uses' => 'UsersController@edit'));
-    Route::post('/update_user/{user}',array('as' => 'update_product','uses' => 'UsersController@update'));
-    Route::get('/delete_user/{user}',array('as' => 'delete_product','uses' => 'UsersController@destroy'));
+    Route::get('/create_user',array('as' => 'create_user','uses' => 'UsersController@create'));
+    Route::post('/add_user',array('as' => 'add_user','uses' => 'UsersController@store'));
+    Route::get('/edit_user/{user}',array('as' => 'edit_user','uses' => 'UsersController@edit'));
+    Route::post('/update_user/{user}',array('as' => 'update_user','uses' => 'UsersController@update'));
+    Route::get('/delete_user/{user}',array('as' => 'delete_user','uses' => 'UsersController@destroy'));
 
     /************************************** Clients Routes ****************************************/
     Route::get('/clients',array('as' => 'clients','uses' => 'ClientsController@index'));

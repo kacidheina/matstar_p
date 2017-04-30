@@ -118,7 +118,7 @@
                         <span class="title">Faqja Kryesore</span>
                     </a>
                 </li>
-                <li class="nav-item @if($current_route == 'users')  active open  @endif">
+                <li class="nav-item @if($current_route == 'users' or $current_route == 'create_user')  active open  @endif">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="fa fa-users"></i>
                         <span class="title">Perdoruesit</span>
@@ -126,12 +126,12 @@
                     </a>
                     <ul class="sub-menu">
                         <li class="nav-item  ">
-                            <a href="" class="nav-link ">
+                            <a href="{{ url('users') }}" class="nav-link ">
                                 <span class="title"><i class="fa fa-list"></i> Lista e Perdoruesave</span>
                             </a>
                         </li>
                         <li class="nav-item  ">
-                            <a href="" class="nav-link ">
+                            <a href="{{ url('create_user') }}" class="nav-link ">
                                 <span class="title"><i class="fa fa-plus"></i> Shto Perdorues</span>
                             </a>
                         </li>
