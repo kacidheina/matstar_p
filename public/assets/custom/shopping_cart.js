@@ -105,12 +105,12 @@ function get_rest_debt(t) {
 
     if(resto > 0)
     {
-        $('#cart_rest').html('<span class="label-success">'+resto+'</span>');
-        $('#cart_debit').html('<span class="label-danger">0</span>');
+        $('#cart_rest').html('<button type="button" class="btn btn-success">'+resto+'</button>');
+        $('#cart_debit').html('<button type="button" class="btn btn-danger">0</button>');
     }else {
 
-        $('#cart_rest').html('<span class="label-success">0</span>');
-        $('#cart_debit').html('<span class="label-danger">'+resto+'</span>');
+        $('#cart_rest').html('<button type="button" class="btn btn-success">0</button>');
+        $('#cart_debit').html('<button type="button" class="btn btn-danger">'+resto+'</button>');
     }
 
 }
