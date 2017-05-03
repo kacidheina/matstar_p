@@ -88,10 +88,31 @@ function add_item_to_cart(id,code,price) {
         '<td style="text-align:center;"><a class="btn btn-sm red cart_item_delete" onclick="remove_item_from_cart('+id+')" data-content="'+id+'"><i class="fa fa-trash"></i></a></td>'+
         '</tr>');
     var total_cart_price = $('#cart_total_price');
+    var cart_client_paid = $('#cart_client_paid').append('<input type="text" onkeyup="get_rest_debt($(this))" style="text-align: center" data-id="'+id+'"  onkeypress="return isNumber(event)" >');
+
     var total_cart_price_float = parseFloat(total_cart_price.text());
     total_cart_price_float = parseFloat(price) + total_cart_price_float;
     total_cart_price.text(total_cart_price_float.toFixed(2));
     shopping_cart.push({'id':id,'quantity':1 , 'price':Number(price) , 'total':Number(price)});
+
+}
+
+function get_rest_debt(t) {
+
+    var total = $('#cart_total_price').text();
+    var client_paid = $(t).val();
+    var resto = Number(client_paid) - Number(total);
+
+    if(resto > 0)
+    {
+        $('#cart_rest').html('<span class="label-success">'+resto+'</span>');
+        $('#cart_debit').html('<span class="label-danger">0</span>');
+    }else {
+
+        $('#cart_rest').html('<span class="label-success">0</span>');
+        $('#cart_debit').html('<span class="label-danger">'+resto+'</span>');
+    }
+
 }
 
 function remove_item_from_cart(id) {

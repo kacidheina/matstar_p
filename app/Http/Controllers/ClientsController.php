@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Debit;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -102,7 +103,8 @@ class ClientsController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        $client_debits = Client::with('debit')->get();
+        return view('clients.profil_client',['client' => $client,'client_debits' => $client_debits]);
     }
 
     /**
@@ -160,8 +162,8 @@ class ClientsController extends Controller
         $client->updated_at = date("Y-m-d H:i:s");
 
         if ($client->save())
-        {return redirect('clients')->with('success','Klienti u fshi me sukses.');}
+        {return response()->json(['error' => 'false', 'message' => 'Klienti u fshi me sukses']);}
         else
-        {return redirect()->back()->with('error','Dicka shkoi gabim. Provoni perseri.');}
+        {return response()->json(['error' => 'true', 'message' => 'Dicka shkoi gabim.Provojeni perseri']);}
     }
 }

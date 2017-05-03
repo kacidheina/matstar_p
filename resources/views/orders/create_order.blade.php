@@ -129,15 +129,15 @@
                                             </div>
                                             <div class="row static-info align-reverse">
                                                 <div class="col-md-8 name"> Klienti Pagoi:</div>
-                                                <div class="col-md-3 value" id="cart_client_paid"> 0</div>
+                                                <div class="col-md-3 value" id="cart_client_paid"></div>
                                             </div>
                                             <div class="row static-info align-reverse">
                                                 <div class="col-md-8 name"> Resto:</div>
-                                                <div class="col-md-3 value" id="cart_rest"> 0</div>
+                                                <div class="col-md-3 value" id="cart_rest"></div>
                                             </div>
                                             <div class="row static-info align-reverse">
                                                 <div class="col-md-8 name"> Debit:</div>
-                                                <div class="col-md-3 value" id="cart_debit"> 0</div>
+                                                <div class="col-md-3 value" id="cart_debit"></div>
                                             </div>
                                         </div>
                                     </div>

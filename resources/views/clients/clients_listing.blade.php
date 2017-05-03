@@ -56,7 +56,7 @@
                             </thead>
                             <tbody>
                             @foreach($clients as $key=>$client)
-                                <tr>
+                                <tr id="idRow{{$client->id}}">
                                     <td> {{$key+1}} </td>
                                     <td> {{$client->name}}</td>
                                     <td> {{$client->nipt}}</td>
@@ -68,8 +68,9 @@
                                         <div class="dropdown">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Veprime<span class="caret"></span></button>
                                             <ul class="dropdown-menu">
+                                                <li><a href="{{url('view_client',$client->id)}}"><i class="fa fa-eye"></i>Shiko Profil</a></li>
                                                 <li><a href="{{url('edit_client',$client->id)}}"><i class="fa fa-edit"></i>Ndrysho</a></li>
-                                                <li><a href="{{url('delete_client',$client->id)}}" class="delete_client" onclick="deleteFunction()"><i class="fa fa-trash"></i>Fshij</a></li>
+                                                <li><a data-id = {{ $client->id }} data-href="{{url('delete_client',$client->id)}}" class="delete_client" ><i class="fa fa-trash"></i>Fshij</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -94,8 +95,33 @@
 @section('page_level_scripts_foot')
     <script src="{{URL::asset('assets/pages/scripts/table-datatables-colreorder.js')}}" type="text/javascript"></script>
     <script>
-        function deleteFunction() {
-            confirm("Ju po fshini kete klient,jeni te sigurte qe doni te vazhdoni? ");
-        }
+        $('.delete_client').on('click', function () {
+            if(confirm("Ky klient do te fshihet , jeni te sigurt qe doni te vazhdoni? ")){
+                var id = $(this).attr('data-id');
+                var path = $(this).attr('data-href');
+                $.ajax(
+                    {
+                        url:path,
+                        type: 'GET',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: {
+                            "id": id
+                        },
+                        success: function (data)
+                        {
+                            console.log(data.error);
+                            if(data.error){
+
+                                $('#idRow'+id).remove();
+                            }
+
+                        }
+                    });
+            }
+            else{
+                return false;
+            }
+        });
+
     </script>
 @endsection
