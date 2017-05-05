@@ -69,53 +69,6 @@
                                         <input type="text" name="code"  data-required="1" class="form-control"  value="{{$product->code}}" placeholder="Vendos kodin e artikullit" /> </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">Ngjyra
-                                        <span class="required"> * </span>
-                                    </label>
-                                    <div class="col-md-5">
-                                        <input type="text" name="color"  data-required="1" class="form-control" value="{{$product->color}}" placeholder="Vendos ngjyren e artikullit"/> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">Numeracioni
-                                        <span class="required"> * </span>
-                                    </label>
-                                    <div class="col-md-3">
-                                        <input type="text" name="numbering_from"  data-required="1" class="form-control" value="{{explode("-", $product->numbering)[0] }}" placeholder="Numri me i vogel"/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" name="numbering_to"  data-required="1" class="form-control" value="{{explode("-", $product->numbering)[1] }}" placeholder="Numri me i madh"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">Sasia
-                                        <span class="required"> * </span>
-                                    </label>
-                                    <div class="col-md-6">
-                                        <input type="text" name="quantity"  data-required="1" class="form-control" value="{{$product->quantity}}" placeholder="Vendos sasine e artikullit"/> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">Cmimi i Blerjes (LEV)
-                                        <span class="required"> * </span>
-                                    </label>
-                                    <div class="col-md-6">
-                                        <input type="text" name="price_bought" id="price_bought" data-required="1" class="form-control" value="{{$product->price_bought}}" placeholder="Vendos cmimin me te cilin u ble artikulli"/> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">Dogana (LEK)
-                                        <span class="required"> * </span>
-                                    </label>
-                                    <div class="col-md-6">
-                                        <input type="text" name="price_customs" id="price_customs" data-required="1" class="form-control" value="{{$product->price_with_customs}}" placeholder="Vendos tarifen doganore per artikullin"/> </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">Cmimi Total (LEK)
-                                        <span class="required"> * </span>
-                                    </label>
-                                    <div class="col-md-6">
-                                        <input type="text" name="price_total" id="price_total" readonly data-required="1" class="form-control" value="{{$product->price_total}}" placeholder="Cmimi total i artikullit"/> </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="control-label col-md-3">Description
                                     </label>
                                     <div class="col-md-9">

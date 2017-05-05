@@ -31,4 +31,8 @@ class Product extends Model
 
     public function modifier()
     {return $this->belongsTo('App\User', 'user_modify_id' );}
+
+    public function entries()
+    {return $this->hasMany('App\ProductEntryHistory', 'id_product' )->latest();}
+
 }
