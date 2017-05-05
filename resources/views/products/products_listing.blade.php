@@ -59,12 +59,12 @@
                             @foreach($products as $product)
                                 <tr id="idRow{{$product->id}}">
                                     <td> {{$product->code}}</td>
-                                    <td> {{$product->color}}</td>
-                                    <td> {{$product->numbering}}</td>
-                                    <td> {{$product->price_bought}}</td>
-                                    <td> {{$product->price_with_customs}}</td>
-                                    <td> {{$product->price_total}}</td>
-                                    <td> {{$product->quantity}}</td>
+                                    <td> {{$product->entries[0]->color}}</td>
+                                    <td> {{$product->entries[0]->numbering}}</td>
+                                    <td> {{$product->entries[0]->price_bought}}</td>
+                                    <td> {{$product->entries[0]->price_with_customs}}</td>
+                                    <td> {{$product->entries[0]->price_total}}</td>
+                                    <td> {{$product->entries[0]->quantity}}</td>
                                     <td> {{$product->category->name}}</td><td>
                                         <div class="dropdown">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Veprime<span class="caret"></span></button>
