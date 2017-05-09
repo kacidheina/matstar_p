@@ -10,6 +10,7 @@
 
     <link href="{{URL::asset('assets/global/plugins/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{URL::asset('assets/global/plugins/select2/css/select2-bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{URL::asset('assets/pages/css/invoice-2.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     <div class="page-content">
@@ -48,7 +49,8 @@
                     <div class="portlet-body">
                         <div class="row">
                             <div class="col-md-5">
-                                <form role="form">
+                                <form role="form" action="{{url('add_order')}}" id="add_order_form" method="post" class="form-horizontal">
+                                    {{csrf_field()}}
                                     <div class="form-body">
                                         <div class="form-group">
                                             <label for="single" class="control-label">Produktet</label>
@@ -62,18 +64,20 @@
 
                                         <div class="form-group">
                                             <label for="client_dropdown" class="control-label">Klienti</label>
-                                            <div class="input-group select2-bootstrap-append">
-                                                <select id="client_dropdown" class="form-control select2">
-                                                    <option value="">Zgjidh Klientin</option>
-                                                    @foreach($clients as $client)
-                                                        <option value="{{$client->id}}">{{$client->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button" title="Shto nje klient te ri." id="add_new_client" >
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                </button>
-                                            </span>
+                                            <div>
+                                                <div class="col-md-9" style="padding-left: 0px;padding-right: 0px; ">
+                                                    <select id="client_dropdown" name="client" class="form-control select2">
+                                                        <option value="">Zgjidh Klientin</option>
+                                                        @foreach($clients as $client)
+                                                            <option value="{{$client->id}}">{{$client->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3" style="padding-left: 0px;padding-right: 0px; ">
+                                                    <button class="btn btn-info btn-block" type="button" title="Shto nje klient te ri." id="add_new_client" >
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -81,37 +85,35 @@
                                             <label>Lloji i Fatures</label>
                                             <div class="radio-list">
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios4"
+                                                    <input type="radio" name="bill_type" id="optionsRadios4"
                                                            value="option1"> Tatimore </label>
                                                 <label class="radio-inline">
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios5"
+                                                    <input type="radio" name="bill_type" id="optionsRadios5"
                                                            value="option2" checked> Jo Tatimore </label>
                                             </div>
                                         </div>
                                         <br>
-                                        <div class="form-group">
-                                            <label>Debit</label>
-                                            <div class="checkbox-list"><label class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value="option1">Llogarit si Debit </label></div>
-                                        </div>
                                         <br>
                                         <div class="form-group">
                                             <label class="control-label">Detaje Per Faturen</label>
                                             <div>
-                                                <textarea class="form-control" rows="3" name="oreder_description"></textarea>
+                                                <textarea class="form-control" rows="3" name="order_description"></textarea>
                                             </div>
                                         </div>
+                                        <input type="hidden" name="cart_details" id="cart_details">
+                                        <input type="hidden" name="client_paid_final_form" id="client_paid_final_form">
                                     </div>
                                 </form>
                             </div>
                             <div class="col-md-7">
-                                <div class="table-responsive" style="margin-top: 25px;">
+                                <div class="table-responsive" style="margin-top: 25px;" id="table_container">
                                     <table class="table table-hover table-bordered table-striped" id="shopping_cart_table" style="margin-bottom: 0px;">
                                         <thead>
                                         <tr>
                                             <th class="col-md-3"> Kodi i Artikullit </th>
-                                            <th class="col-md-2"> Cmimi</th>
-                                            <th class="col-md-3"> Sasia</th>
-                                            <th class="col-md-2W"> Totali</th>
+                                            <th class="col-md-3"> Cmimi</th>
+                                            <th class="col-md-2"> Sasia</th>
+                                            <th class="col-md-2"> Totali</th>
                                             <th class="col-md-2"> Veprime</th>
                                         </tr>
                                         </thead>
@@ -119,25 +121,34 @@
 
                                         </tbody>
                                     </table>
+                                    <div class="empty_row"><b>Nuk ka produkte.</b></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="well">
                                             <div class="row static-info align-reverse">
                                                 <div class="col-md-8 name"> Cmimit Total:</div>
-                                                <div class="col-md-3 value" id="cart_total_price"> 0</div>
+                                                <div class="col-md-3 value" id="cart_total_price" style="text-align: center"> 0.00</div>
                                             </div>
                                             <div class="row static-info align-reverse">
                                                 <div class="col-md-8 name"> Klienti Pagoi:</div>
-                                                <div class="col-md-3 value" id="cart_client_paid"></div>
+                                                <div class="col-md-3 value" id="cart_client_paid">
+                                                    <input type="text" class="col-md-12" id="client_paid_input"  value="0" onkeyup="get_rest_debt($(this))" style="text-align: center" data-id="'+id+'"  onkeypress="return isNumber(event)" >
+                                                </div>
                                             </div>
                                             <div class="row static-info align-reverse">
                                                 <div class="col-md-8 name"> Resto:</div>
-                                                <div class="col-md-3 value" id="cart_rest"></div>
+                                                <div class="col-md-3 value"><span id="cart_rest" class="btn green-jungle btn-block"> 0 </span></div>
                                             </div>
                                             <div class="row static-info align-reverse">
                                                 <div class="col-md-8 name"> Debit:</div>
-                                                <div class="col-md-3 value" id="cart_debit"></div>
+                                                <div class="col-md-3 value"><span id="cart_debit" class="btn btn-danger btn-block"> 0 </span></div>
+                                            </div>
+                                            <br><br><br>
+                                            <div class="row static-info align-reverse">
+                                                <div class="col-md-3 name"></div>
+                                                <div class="col-md-4 value"> <a class="btn btn-default" data-toggle="modal" href="#large"> Shiko Faturen </a></div>
+                                                <div class="col-md-4 value"> <button id="submit_order" style="text-align: right" class="btn btn-success"> Mbyll Porosine </button></div>
                                             </div>
                                         </div>
                                     </div>
@@ -198,6 +209,108 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade bs-modal-lg" id="large" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <!-- BEGIN PAGE BASE CONTENT -->
+                    <div class="invoice-content-2 bordered" id="print_area">
+                        <div class="row invoice-head">
+                            <div class="col-md-5 col-xs-6">
+                                <div class="invoice-logo">
+                                    <img src="{{asset('assets/pages/img/logos/logo2.jpg')}}" width="200" class="img-responsive" alt="" />
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-xs-6">
+                                <h5 class="uppercase">Fature Jo Tatimore</h5>
+                            </div>
+                            <div class="col-md-5 col-xs-6">
+                                <div class="company-address">
+                                    <span class="bold uppercase">Mat Star Albania</span>
+                                    <br/> <span class="bold">Rr :</span> Ferit Xhajko
+                                    <br/> 40 m Poshte Kryqezimit
+                                    <br/> Tek Farmacia 10
+                                    <br/>
+                                    <span class="bold">Tel :</span> +355 069 2622 147
+                                    <br/> Tirane, AL
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row invoice-cust-add">
+                            <div class="col-xs-6">
+                                <h2 class="invoice-title uppercase">Klienti</h2>
+                                <p class="invoice-desc">Lorem Tech Co.</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <h2 class="invoice-title uppercase">Data e Faturimit</h2>
+                                <p class="invoice-desc">{{\Jenssegers\Date\Date::now()->format('H:i , j M Y')}} &nbsp;&nbsp;&nbsp;({{\Jenssegers\Date\Date::now()->format('d.m.Y')}})</p>
+                            </div>
+                        </div>
+                        <div class="row invoice-body">
+                            <div class="col-xs-12 table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th class="invoice-title uppercase">Produkti (Kodi)</th>
+                                        <th class="invoice-title uppercase text-center">Cmim /Cope</th>
+                                        <th class="invoice-title uppercase text-center">Sasia</th>
+                                        <th class="invoice-title uppercase text-center">Totali</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <h3>Web Design & Development</h3>
+                                            <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet et dolore siat magna aliquam erat volutpat. </p>
+                                        </td>
+                                        <td class="text-center sbold">200</td>
+                                        <td class="text-center sbold">80$</td>
+                                        <td class="text-center sbold">16,000$</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h3>Branding</h3>
+                                            <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod. </p>
+                                        </td>
+                                        <td class="text-center sbold">130</td>
+                                        <td class="text-center sbold">60$</td>
+                                        <td class="text-center sbold">7,800$</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row invoice-subtotal">
+                            <div class="col-xs-3">
+                                <h2 class="invoice-title uppercase">U paguan</h2>
+                                <p class="invoice-desc">23,800$</p>
+                            </div>
+                            <div class="col-xs-3">
+                                <h2 class="invoice-title uppercase">Resto</h2>
+                                <p class="invoice-desc">0$</p>
+                            </div>
+                            <div class="col-xs-3">
+                                <h2 class="invoice-title uppercase">Debit</h2>
+                                <p class="invoice-desc">0$</p>
+                            </div>
+                            <div class="col-xs-3">
+                                <h2 class="invoice-title uppercase">Total</h2>
+                                <p class="invoice-desc grand-total">23,800$</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a class="btn btn-lg green-haze hidden-print uppercase print-btn" onclick="print_bill();">Print</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END PAGE BASE CONTENT -->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 @endsection
 @section('page_level_plugins_foot')
     <script src="{{URL::asset('assets/global/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js')}}" type="text/javascript"></script>
@@ -222,4 +335,5 @@
     <script src="{{URL::asset('assets/custom/shopping_cart.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/pages/scripts/components-select2.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/pages/scripts/form-validation.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/custom/printThis.js')}}" type="text/javascript"></script>
 @endsection

@@ -23,16 +23,30 @@ class Product extends Model
         });
     }
 
-    public function category()
-    {return $this->belongsTo('App\Category', 'id_category' );}
 
     public function creator()
-    {return $this->belongsTo('App\User', 'user_create_id' );}
+    {
+        return $this->belongsTo('App\User', 'user_create_id');
+    }
 
     public function modifier()
-    {return $this->belongsTo('App\User', 'user_modify_id' );}
+    {
+        return $this->belongsTo('App\User', 'user_modify_id');
+    }
 
     public function entries()
-    {return $this->hasMany('App\ProductEntryHistory', 'id_product' )->latest();}
+    {
+        return $this->hasMany('App\ProductEntryHistory', 'id_product');
+    }
 
+    public function variations()
+    {
+        return $this->hasMany('App\Product_Variation', 'id_product');
+    }
+
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category', 'id_category');
+    }
 }
