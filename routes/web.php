@@ -85,6 +85,15 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
+    /**************************************Color Routes ****************************************/
+    Route::get('/colors',array('as' => 'colors','uses' => 'ColorController@index'));
+    Route::get('/view_colors/{color}',array('as' => 'view_colors','uses' => 'ColorController@show'));
+    Route::get('/create_color',array('as' => 'create_color','uses' => 'ColorController@create'));
+    Route::post('/add_color',array('as' => 'add_color','uses' => 'ColorController@store'));
+    Route::get('/edit_color/{color}',array('as' => 'edit_color','uses' => 'ColorController@edit'));
+    Route::post('/update_color/{color}',array('as' => 'update_color','uses' => 'ColorController@update'));
+    Route::get('/delete_color/{color}',array('as' => 'delete_color','uses' => 'ColorController@destroy'));
+
 
 
 

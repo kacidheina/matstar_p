@@ -21,3 +21,22 @@
 .label-lek , .label-eur , .label-lev {
     padding-top: 8px;
 }
+
+.empty_row{
+    text-align: center;
+    vertical-align:center;
+    margin-top: 0;
+    border: 1px solid #e7ecf1;
+    height: 36px;
+    line-height: 36px;
+}
+
+.well{
+    background-color: #ffffff;
+    border: 1px solid #e7ecf1;
+}
+
+.color_dd{
+    float:right;
+    width:50px;
+}

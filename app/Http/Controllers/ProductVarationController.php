@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Client;
-use App\Order;
-use App\Product;
+use App\Product_Variation;
 use Illuminate\Http\Request;
 
-class OrdersController extends Controller
+class ProductVarationController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_archive()
+    public function index()
     {
         //
     }
@@ -28,10 +24,7 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        $products = Product::with(array('category' => function($query) {$query->select('id','name');}))->get();
-        $clients = Client::where('delete','no')->get();
-
-        return view('orders.create_order',['products'=>$products,'clients'=>$clients]);
+        //
     }
 
     /**
@@ -42,16 +35,16 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        echo $request->cart_details; die;
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Order  $order
+     * @param  \App\Product_Variation  $product_Variation
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(Product_Variation $product_Variation)
     {
         //
     }
@@ -59,10 +52,10 @@ class OrdersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Order  $order
+     * @param  \App\Product_Variation  $product_Variation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit(Product_Variation $product_Variation)
     {
         //
     }
@@ -71,10 +64,10 @@ class OrdersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
+     * @param  \App\Product_Variation  $product_Variation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Product_Variation $product_Variation)
     {
         //
     }
@@ -82,10 +75,10 @@ class OrdersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Order  $order
+     * @param  \App\Product_Variation  $product_Variation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Product_Variation $product_Variation)
     {
         //
     }

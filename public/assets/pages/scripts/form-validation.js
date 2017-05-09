@@ -57,6 +57,79 @@ var FormValidation = function () {
 
     };
 
+
+
+    //Validating Add Category Form
+    var handleAddColorValidation = function() {
+        // for more info visit the official plugin documentation:
+        // http://docs.jquery.com/Plugins/Validation
+
+        $.validator.addMethod("regex", function(value, element, regexpr) {return regexpr.test(value);});
+
+        var form1 = $('#add_color_form');
+        var error1 = $('.alert-danger', form1);
+        var success1 = $('.alert-success', form1);
+
+        form1.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block help-block-error', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",  // validate all fields including form hidden input
+            messages: {
+                name: {
+                    required: jQuery.validator.format("Emri i ngjyres eshte i domosdoshem."),
+                    minlength: jQuery.validator.format("Emri i ngjyres duhet te jete te pakten {0} karaktere.")
+                },
+                code: {
+                    required: jQuery.validator.format("Kodi i ngjyres eshte i domosdoshem."),
+                    minlength: jQuery.validator.format("Kodi i ngjyres duhet te jete te pakten {0} karaktere."),
+                    maxlength: jQuery.validator.format("Kodi i ngjyres duhet te jete te jo me shume se {0} karaktere."),
+                    regex: jQuery.validator.format("Format i gabuar i kodit.")
+                }
+            },
+            rules: {
+                name: {
+                    minlength: 3,
+                    required: true
+                },
+                code: {
+                    maxlength: 7,
+                    minlength: 4,
+                    required: true,
+                    regex: /[#]+/
+                }
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                success1.hide();
+                error1.show();
+                App.scrollTo(error1, -200);
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label.closest('.form-group').removeClass('has-error'); // set success class to the control group
+            },
+
+            submitHandler: function (form) {
+                success1.show();
+                error1.hide();
+                this.submit();
+            }
+        });
+
+
+    };
+
     //Validating Add Clients Form
     var handleAddClientValidation = function() {
         // for more info visit the official plugin documentation:
@@ -131,6 +204,7 @@ var FormValidation = function () {
 
 
     };
+
 
     //Validating Add Users Form
     var handleAddUserValidation = function() {
@@ -794,6 +868,7 @@ var FormValidation = function () {
             handleAddUserValidation();
             handleAddProductValidation();
             handleAddClientValidationModal();
+            handleAddColorValidation();
             handleValidation1();
             handleValidation2();
             handleValidation3();

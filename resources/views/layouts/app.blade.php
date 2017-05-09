@@ -257,6 +257,25 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item @if($current_route == 'colors')  active open  @endif">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-paint-brush"></i>
+                        <span class="title">Ngjyrat e Artikujve</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class="nav-item  ">
+                            <a href="{{url('colors')}}" class="nav-link ">
+                                <span class="title"><i class="fa fa-list"></i> Listimi i Ngjyrave</span>
+                            </a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a href="{{url('create_color')}}" class="nav-link ">
+                                <span class="title"><i class="fa fa-plus"></i> Shto Ngjyre</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item @if($current_route == 'orders')  active open  @endif">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="fa fa-shopping-cart"></i>

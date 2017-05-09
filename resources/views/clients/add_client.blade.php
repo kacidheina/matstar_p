@@ -91,6 +91,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 @section('page_level_plugins_foot')
     <script src="{{URL::asset('assets/global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
