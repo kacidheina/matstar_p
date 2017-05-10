@@ -1,15 +1,3 @@
-function notification_handler(state, message) {
-    var notification;
-    var random_id = Math.floor((Math.random() * 10000) + 1);
-
-    notification = '<div id="' + random_id + '" class="toast toast-' + state + '"> <div id="toast-container-js-title"class="toast-title"></div> Error <div id="toast-container-js-message" class="toast-message">' + message + '</div> </div>';
-    $('#toast-container').append(notification);
-    setTimeout(function () {
-        $("#" + random_id + "").fadeOut('slow', function () {
-            $(this).remove();
-        });
-    }, 3000);
-}
 
 function isNumber(evt) {
     evt = (evt) ? evt : window.event;
@@ -38,7 +26,7 @@ $("#add_client_form_modal").submit(function (e) {
 
         $.ajax({
             type: 'POST',
-            url: super_path + '/add_client_ajax',
+            url: super_path + '/add_client',
             data: formData,
             dataType: 'json',
             headers: {

@@ -841,7 +841,7 @@ var FormValidation = function () {
                 autoclose: true
             });
             $('.date-picker .form-control').change(function() {
-                form3.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input 
+               // form3.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
             })
     }
 

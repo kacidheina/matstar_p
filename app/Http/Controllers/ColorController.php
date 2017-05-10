@@ -53,6 +53,13 @@ class ColorController extends Controller
         $color->user_create_id = Auth::user()->id;
         $color->created_at = date("Y-m-d H:i:s");
 
+        if($request->ajax()){
+            if ($color->save())
+            {return response()->json(['error' => false ,'type' => 'success' ,'message' => 'Ngjyra u shtua me sukses.' ,'data' => ['id' => $color->id ,'name' => $color->name ,'code' => $color->code]]);}
+            else
+            {return response()->json(['error' => true ,'message' => 'Dicka shkoi gabim. Provoni perseri.']);}
+        }
+
         if ($color->save())
         {return redirect('colors')->with('success','Ngjyra u shtua me sukses.');}
         else
