@@ -58,42 +58,19 @@ class ClientsController extends Controller
         $client->user_create_id = Auth::user()->id;
         $client->created_at = date("Y-m-d H:i:s");
 
+        if($request->ajax()){
+            if ($client->save())
+            {return response()->json(['error' => false ,'type' => 'success' ,'message' => 'Klienti u shtua me sukses.' ,'data' => ['id' => $client->id ,'name' => $client->name]]);}
+            else
+            {return response()->json(['error' => true ,'message' => 'Dicka shkoi gabim. Provoni perseri.']);}
+        }
+
         if ($client->save())
         {return redirect('clients')->with('success','Klienti u shtua me sukses.');}
         else
         {return redirect()->back()->with('error','Dicka shkoi gabim. Provoni perseri.');}
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store_ajax(Request $request)
-    {
-        $validator = Validator::make($request->all(),
-            [
-                'name' => 'required|min:4',
-                'phone' => 'numeric',
-                'city' => 'required',
-                'nipt' => 'required|min:3'
-            ]);
-        if ($validator->fails()) {return response()->json(['error' => true ,'message' => 'Te dhenat nuk u futen ne formatin e duhur.']);}
-
-        $client = new Client();
-        $client->name = $request->name;
-        $client->phone = $request->phone;
-        $client->city = $request->city;
-        $client->nipt = $request->nipt;
-        $client->user_create_id = Auth::user()->id;
-        $client->created_at = date("Y-m-d H:i:s");
-
-        if ($client->save())
-        {return response()->json(['error' => false ,'type' => 'success' ,'message' => 'Klienti u shtua me sukses.' ,'data' => ['id' => $client->id ,'name' => $client->name]]);}
-        else
-        {return response()->json(['error' => true ,'message' => 'Dicka shkoi gabim. Provoni perseri.']);}
-    }
 
     /**
      * Display the specified resource.
