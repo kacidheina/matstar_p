@@ -33,7 +33,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/view_client/{client}',array('as' => 'view_client','uses' => 'ClientsController@show'));
     Route::get('/create_client',array('as' => 'create_client','uses' => 'ClientsController@create'));
     Route::post('/add_client',array('as' => 'add_client','uses' => 'ClientsController@store'));
-    Route::post('/add_client_ajax',array('as' => 'add_client_ajax','uses' => 'ClientsController@store_ajax'));
     Route::get('/edit_client/{client}',array('as' => 'edit_client','uses' => 'ClientsController@edit'));
     Route::post('/update_client/{client}',array('as' => 'update_client','uses' => 'ClientsController@update'));
     Route::get('/delete_client/{client}',array('as' => 'delete_client','uses' => 'ClientsController@destroy'));
@@ -80,10 +79,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update_client_debit/{debit}',array('as' => 'update_client_debit','uses' => 'DebitsController@update_client_debit'));
     Route::get('/delete_debit/{story_debts}',array('as' => 'delete_debit','uses' => 'DebitsController@destroy'));
     Route::get('/delete_client_debit/{debit}',array('as' => 'delete_client_debit','uses' => 'DebitsController@destroy_client_debit'));
-    Route::get('/test',function(){
-        return $products = App\Product::with('category')->get();
-    });
-
 
     /**************************************Color Routes ****************************************/
     Route::get('/colors',array('as' => 'colors','uses' => 'ColorController@index'));
@@ -95,9 +90,26 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/delete_color/{color}',array('as' => 'delete_color','uses' => 'ColorController@destroy'));
 
 
+    /**************************************Product Entries Routes ****************************************/
+    Route::get('/view_entry/{entry}',array('as' => 'view_entry','uses' => 'ProductEntryHistoryController@show'));
+    Route::get('/create_entry/{product}',array('as' => 'create_entry','uses' => 'ProductEntryHistoryController@create'));
+    Route::post('/add_entry/{product}',array('as' => 'add_entry','uses' => 'ProductEntryHistoryController@store'));
+    Route::get('/edit_entry/{entry}',array('as' => 'edit_entry','uses' => 'ProductEntryHistoryController@edit'));
+    Route::post('/update_entry/{entry}',array('as' => 'update_entry','uses' => 'ProductEntryHistoryController@update'));
+    Route::get('/delete_entry/{entry}',array('as' => 'delete_entry','uses' => 'ProductEntryHistoryController@destroy'));
+
+
+    /**************************************Product Variation Routes ****************************************/
+    Route::get('/view_variation/{variation}',array('as' => 'view_variation','uses' => 'ProductVarationController@show'));
+    Route::get('/create_variation/{product}',array('as' => 'create_variation','uses' => 'ProductVarationController@create'));
+    Route::post('/add_variation/{product}',array('as' => 'add_variation','uses' => 'ProductVarationController@store'));
+    Route::get('/edit_variation/{variation}',array('as' => 'edit_variation','uses' => 'ProductVarationController@edit'));
+    Route::post('/update_variation/{variation}',array('as' => 'update_variation','uses' => 'ProductVarationController@update'));
+    Route::get('/delete_variation/{variation}',array('as' => 'delete_variation','uses' => 'ProductVarationController@destroy'));
 
 
 
+    /**************************************Course Routes ****************************************/
     Route::post('/update_course',array('as' => 'update_course','uses' => 'SystemVariablesController@update_course'));
 
 });

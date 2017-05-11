@@ -9,6 +9,20 @@ class ProductEntryHistory extends Model
 {
     public $table = 'product_entry_history';
 
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('delete', function (Builder $builder) {
+            $builder->where('delete', '=', 'no');
+        });
+    }
+
 
     public function productVariations()
     {return $this->hasMany('App\Product_Variation', 'id_entry' );}

@@ -403,7 +403,19 @@
 <!-- END THEME LAYOUT SCRIPTS -->
 
 <script>
+    function notification_handler(state, message) {
+        var notification;
+        var random_id = Math.floor((Math.random() * 10000) + 1);
 
+
+        notification = '<div id="' + random_id + '" class="toast toast-' + state + '"> <div id="toast-container-js-message" class="toast-message">' + message + '</div> </div>';
+        $('#toast-container').append(notification);
+        setTimeout(function () {
+            $("#" + random_id + "").fadeOut('slow', function () {
+                $(this).remove();
+            });
+        }, 3000);
+    }
 </script>
 
 </body>

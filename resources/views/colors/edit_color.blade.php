@@ -110,25 +110,5 @@
     <script src="{{URL::asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js')}}" type="text/javascript"></script>
 @endsection
 @section('page_level_scripts_foot')
-    <script>
-        $('#price_bought').keyup(function ()
-            {
-                if ($('#price_customs').val() != ''){
-                    var total_price = ($('#price_bought').val() * course_lek / course_lev ) ;
-                    total_price = total_price + Number($('#price_customs').val());
-                    $('#price_total').val(total_price.toFixed(2));
-                }
-            }
-        );
 
-        $('#price_customs').keyup(function ()
-            {
-                if ($('#price_bought').val() != ''){
-                    var total_price = ($('#price_bought').val() * course_lek / course_lev ) ;
-                    total_price = total_price + Number($('#price_customs').val());
-                    $('#price_total').val(total_price.toFixed(2));
-                }
-            }
-        );
-    </script>
 @endsection

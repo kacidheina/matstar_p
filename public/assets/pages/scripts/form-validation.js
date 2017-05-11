@@ -902,6 +902,7 @@ var FormValidation = function () {
                 form3.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
             });
 
+
             // //initialize datepicker
             // $('.date-picker').datepicker({
             //     rtl: App.isRTL(),
@@ -910,6 +911,7 @@ var FormValidation = function () {
             // $('.date-picker .form-control').change(function() {
             //     form3.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
             // })
+
     }
 
     var handleWysihtml5 = function() {

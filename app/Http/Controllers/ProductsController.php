@@ -20,10 +20,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //$products = DB::select('SELECT p.`id`, p.`id_category`, c.`name` as `category`, p.`code`, p.`color`, p.`numbering`, p.`price_bought`, p.`price_with_customs`, p.`price_total`, p.`quantity`, p.`description`, p.`note`, uc.`name` AS `creator`, um.`name` AS `modifier`, p.`created_at`, p.`updated_at` FROM `products` p LEFT JOIN `categories` c ON p.`id_category` = c.`id` LEFT JOIN `users` uc ON p.`user_create_id` = uc.`id` LEFT JOIN `users` um ON p.`user_modify_id` = uc.`id` WHERE p.`delete` = \'no\'');
-
         $products = Product::with('category')->with('creator')->with('modifier')->with('entries')->get();
-
         return view('products.products_listing', ['products' => $products]);
     }
 
@@ -65,7 +62,9 @@ class ProductsController extends Controller
         $product->created_at = date("Y-m-d H:i:s");
 
         if ($product->save())
-        {return view('products.view_product', ['product' => $product])->with('success', 'Artikulli u shtua me sukses.');}
+        { return redirect()->route('view_product',$product->id);
+            //return view('products.view_product', ['product' => $product])->with('success', 'Artikulli u shtua me sukses.');
+            }
         else
         {return redirect()->back()->with('error', 'Dicka shkoi gabim. Provoni perseri.');}
 
@@ -78,8 +77,8 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
-    {
-        return  view('products.view_product', ['product' => $product->load('category', 'variations.color','variations.entry','variations.creator','variations.modifier', 'entries.creator','entries.modifier', 'modifier', 'creator')]);
+    {   $colors = Color::get();
+        return  view('products.view_product', ['colors'=>$colors,'product' => $product->load('category', 'variations.color','variations.entry','variations.creator','variations.modifier', 'entries.creator','entries.modifier', 'modifier', 'creator')]);
     }
 
     /**
