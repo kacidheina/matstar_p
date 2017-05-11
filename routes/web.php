@@ -112,4 +112,15 @@ Route::group(['middleware' => 'auth'], function () {
     /**************************************Course Routes ****************************************/
     Route::post('/update_course',array('as' => 'update_course','uses' => 'SystemVariablesController@update_course'));
 
+
+    /**************************************Expenses Routes ****************************************/
+
+    Route::get('/expenses_list',array('as' => 'debit_list','uses' => 'ExpensesController@index'));
+    Route::get('/view_expenses/{expenses}',array('as' => 'view_debit','uses' => 'ExpensesController@show'));
+    Route::get('/create_expenses',array('as' => 'create_debit','uses' => 'ExpensesController@create'));
+    Route::post('/add_expenses',array('as' => 'add_debit','add_debit' => 'ExpensesController@store'));
+    Route::get('/edit_expenses/{expenses}',array('as' => 'edit_debit','uses' => 'ExpensesController@edit'));
+    Route::post('/update_expenses/{expenses}',array('as' => 'update_debit','uses' => 'ExpensesController@update'));
+    Route::get('/delete_expenses/{expenses}',array('as' => 'delete_debit','uses' => 'ExpensesController@destroy'));
+
 });
