@@ -54,7 +54,7 @@ class ProductEntryHistoryController extends Controller
         {
             $actionBar = '<div class="dropdown"><button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Veprime<span class="caret"></span></button><ul class="dropdown-menu"><li><a href=""><i class="fa fa-eye"></i>Shiko Profil</a></li><li><a href=""><i class="fa fa-edit"></i>Ndrysho</a></li><li><a class="delete_client"><i class="fa fa-trash"></i>Fshij</a></li></ul></div>';
             $row = [$entry->id,'<p hidden="">'.$entry->entry_date.'</p>'.Date::parse($entry->entry_date)->format('j M Y'),Auth::user()->name,' E pandryshuar.',' E pandryshuar.',$actionBar];
-            return response()->json(['error'=> false, 'message'=>'Hyrja u shtua me sukses','row'=>$row,'id'=>$entry->id]);
+            return response()->json(['error'=> false, 'message'=>'Hyrja u shtua me sukses','row'=>$row,'id'=>$entry->id,'date'=>Date::parse($entry->entry_date)->format('j M Y')]);
         }
         else
         {  return response()->json(['error'=> true, 'message'=>'Dicka shkoi gabim. Provoni perseri.']);}
