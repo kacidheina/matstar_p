@@ -67,7 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**************************************Debit Routes ****************************************/
     Route::get('/debit_list',array('as' => 'debit_list','uses' => 'DebitsController@index_company'));
     Route::get('/clients_debit_list',array('as' => 'clients_debit_list','uses' => 'DebitsController@index_client'));
-    Route::get('/view_debit/{debit}',array('as' => 'view_debit','uses' => 'DebitsController@show'));
+    Route::get('/view_debit/{story_debts}',array('as' => 'view_debit','uses' => 'DebitsController@show'));
     Route::get('/view_client_debit/{debit}',array('as' => 'view_client_debit','uses' => 'DebitsController@show_client_debit'));
     Route::get('/create_debit',array('as' => 'create_debit','uses' => 'DebitsController@create'));
     Route::get('/create_client_debit/{client}',array('as' => 'create_client_debit','uses' => 'DebitsController@create_client_debit'));

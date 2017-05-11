@@ -83,7 +83,10 @@ class DebitsController extends Controller
      */
     public function show(Story_Debts $story_debts)
     {
-        //
+        if ($story_debts->description != "")
+        {return response()->json(['error' => false ,'type' => 'success' ,'description' => $story_debts->description]);}
+        else
+        {return response()->json(['error' => true ,'description' => 'Nuk ka asnje shenim per kete borxh']);}
     }
 
     /**
