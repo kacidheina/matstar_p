@@ -129,7 +129,9 @@ var TableDatatablesColreorder = function () {
         var table = $('#entries_table');
 
         var oTable = table.dataTable({
-
+            columnDefs: [
+                {"className": "dt-center", "targets": "_all"}
+            ],
             // Internationalisation. For more info refer to http://datatables.net/manual/i18n
             "language": {
                 "aria": {
@@ -191,7 +193,9 @@ var TableDatatablesColreorder = function () {
         var table = $('#variations_table');
 
         var oTable = table.dataTable({
-
+            columnDefs: [
+                {"className": "dt-center", "targets": "_all"}
+            ],
             // Internationalisation. For more info refer to http://datatables.net/manual/i18n
             "language": {
                 "aria": {
