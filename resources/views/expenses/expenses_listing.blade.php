@@ -92,12 +92,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Shenim.</h4>
+                    <h4 class="modal-title"></h4>
                 </div>
-                <div class="modal-body" id="modalBody"> </div>
+                <div class="modal-body" id="modalBody"> Ju jeni duke fshire kete shpenzim, nese doni te vazhdoni me kete veprim klikoni Fshij </div>
                 <div class="modal-footer">
                     <button type="button" class="btn dark btn-outline" data-dismiss="modal">Mbyll</button>
-                    {{--<button type="button" class="btn green">Save changes</button>--}}
+                    <button type="button" class="btn green">Fshij</button>
                 </div>
             </div>
             <!-- /.modal-content -->
