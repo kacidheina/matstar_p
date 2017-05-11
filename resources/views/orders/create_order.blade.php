@@ -199,7 +199,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn dark btn-outline" data-dismiss="modal"id="close_add_client_modal">Mbyll</button>
+                            <button type="button" class="btn dark btn-outline" data-dismiss="modal" id="close_add_client_modal">Mbyll</button>
                             <button type="submit" class="btn green" id="save_client">Ruaj</button>
                         </div>
                     </form>

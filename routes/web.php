@@ -76,9 +76,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/add_client_debit/{client}',array('as' => 'add_client_debit','uses' => 'DebitsController@store_client_debit'));
     Route::get('/edit_debit/{debit}',array('as' => 'edit_debit','uses' => 'DebitsController@edit'));
     Route::get('/edit_client_debit/{debit}',array('as' => 'edit_client_debit','uses' => 'DebitsController@edit_client_debit'));
-    Route::post('/update_debit/{order}',array('as' => 'update_debit','uses' => 'DebitsController@update'));
+    Route::post('/update_debit/{story_debts}',array('as' => 'update_debit','uses' => 'DebitsController@update'));
     Route::post('/update_client_debit/{debit}',array('as' => 'update_client_debit','uses' => 'DebitsController@update_client_debit'));
-    Route::get('/delete_order/{debit}',array('as' => 'delete_order','uses' => 'DebitsController@destroy'));
+    Route::get('/delete_debit/{story_debts}',array('as' => 'delete_debit','uses' => 'DebitsController@destroy'));
     Route::get('/delete_client_debit/{debit}',array('as' => 'delete_client_debit','uses' => 'DebitsController@destroy_client_debit'));
     Route::get('/test',function(){
         return $products = App\Product::with('category')->get();
