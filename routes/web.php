@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit_product/{product}',array('as' => 'edit_product','uses' => 'ProductsController@edit'));
     Route::post('/update_product/{product}',array('as' => 'update_product','uses' => 'ProductsController@update'));
     Route::get('/delete_product/{product}',array('as' => 'delete_product','uses' => 'ProductsController@destroy'));
+    Route::get('/get_product_variations/{product}',array('as' => 'get_product_variations','uses' => 'ProductsController@get_product_variations'));
 
     /**************************************Orders Routes ****************************************/
     Route::get('/orders_archive',array('as' => 'orders_archive','uses' => 'OrdersController@index_archive'));
@@ -67,7 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**************************************Debit Routes ****************************************/
     Route::get('/debit_list',array('as' => 'debit_list','uses' => 'DebitsController@index_company'));
     Route::get('/clients_debit_list',array('as' => 'clients_debit_list','uses' => 'DebitsController@index_client'));
-    Route::get('/view_debit/{debit}',array('as' => 'view_debit','uses' => 'DebitsController@show'));
+    Route::get('/view_debit/{story_debts}',array('as' => 'view_debit','uses' => 'DebitsController@show'));
     Route::get('/view_client_debit/{debit}',array('as' => 'view_client_debit','uses' => 'DebitsController@show_client_debit'));
     Route::get('/create_debit',array('as' => 'create_debit','uses' => 'DebitsController@create'));
     Route::get('/create_client_debit/{client}',array('as' => 'create_client_debit','uses' => 'DebitsController@create_client_debit'));
@@ -88,7 +89,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit_color/{color}',array('as' => 'edit_color','uses' => 'ColorController@edit'));
     Route::post('/update_color/{color}',array('as' => 'update_color','uses' => 'ColorController@update'));
     Route::get('/delete_color/{color}',array('as' => 'delete_color','uses' => 'ColorController@destroy'));
-
 
     /**************************************Product Entries Routes ****************************************/
     Route::get('/view_entry/{entry}',array('as' => 'view_entry','uses' => 'ProductEntryHistoryController@show'));
@@ -111,5 +111,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     /**************************************Course Routes ****************************************/
     Route::post('/update_course',array('as' => 'update_course','uses' => 'SystemVariablesController@update_course'));
+
+
+    /**************************************Expenses Routes ****************************************/
+
+    Route::get('/expenses_list',array('as' => 'debit_list','uses' => 'ExpensesController@index'));
+    Route::get('/view_expenses/{expenses}',array('as' => 'view_debit','uses' => 'ExpensesController@show'));
+    Route::get('/create_expenses',array('as' => 'create_debit','uses' => 'ExpensesController@create'));
+    Route::post('/add_expenses',array('as' => 'add_debit','add_debit' => 'ExpensesController@store'));
+    Route::get('/edit_expenses/{expenses}',array('as' => 'edit_debit','uses' => 'ExpensesController@edit'));
+    Route::post('/update_expenses/{expenses}',array('as' => 'update_debit','uses' => 'ExpensesController@update'));
+    Route::get('/delete_expenses/{expenses}',array('as' => 'delete_debit','uses' => 'ExpensesController@destroy'));
 
 });

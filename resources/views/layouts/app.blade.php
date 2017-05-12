@@ -314,7 +314,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item @if($current_route == 'debits')  active open  @endif">
+                <li class="nav-item @if($current_route == 'expenses_list')  active open  @endif">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="fa fa-usd"></i>
                         <span class="title">Shpenzimet</span>
@@ -322,12 +322,12 @@
                     </a>
                     <ul class="sub-menu">
                         <li class="nav-item  ">
-                            <a href="" class="nav-link ">
+                            <a href="{{url('expenses_list')}}" class="nav-link ">
                                 <span class="title"><i class="fa fa-building-o"></i> Lista e Shpenzimeve</span>
                             </a>
                         </li>
                         <li class="nav-item  ">
-                            <a href="" class="nav-link ">
+                            <a href="{{url('create_expenses')}}" class="nav-link ">
                                 <span class="title"><i class="fa fa-users"></i> Shto Shpenzim</span>
                             </a>
                         </li>

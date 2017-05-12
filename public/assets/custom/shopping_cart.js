@@ -181,9 +181,32 @@ function update_cart(id, quantity) {
 
 
 $("#product_dorpdown").on('change', function () {
-    var data = $(this).select2().find(":selected").data("content");
-    add_item_to_cart(data.id, data.code, data.price_total);
-
+    var id = $(this).select2().find(":selected").val();
+    if(id != '')
+    {
+        $.ajax(
+            {
+                url: super_path + '/add_client',
+                type: 'POST',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data['error'] === true){error = 'error'}
+                    else{
+                        error = 'success';
+                        $('#entry_dropdown').append('<option value="' + data['id'] + '" selected>' + data['date'] + '</option>').trigger("change");
+                        $('#entries_table').DataTable().row.add(data['row']).draw();
+                        $('#entries_table tr:last').attr('id','idRow'+data['id']);
+                        $('#add_entry_modal').modal('hide');
+                    }
+                    notification_handler(error, data['message']);
+                },
+                error:function () {
+                    notification_handler('error', 'Dicka shkoi gabim. Ju lutem provoni perseri.');
+                }
+            });
+    }
+    //add_item_to_cart(data.id, data.code, data.price_total);
 });
 
 

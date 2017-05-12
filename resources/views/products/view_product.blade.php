@@ -28,15 +28,15 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="">Shiko Artikullin</a>
+                    <a href="">Shiko Artikullin : <strong>{{$product->name}}</strong></a>
                 </li>
             </ul>
             <div class="page-toolbar"></div>
         </div>
         <!-- END PAGE BAR -->
         <!-- BEGIN PAGE TITLE-->
-        <h3 class="page-title"> {{$product->name}}
-            <small>Detajet</small>
+        <h3 class="page-title"> {{$product->name}} ( <strong>{{$product->code}}</strong>)
+           &nbsp; <small>{{$product->category->name}}</small>
         </h3>
         <!-- END PAGE TITLE-->
         <!-- END PAGE HEADER-->
@@ -172,7 +172,7 @@
             <div class="modal-content" >
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Shto hyrje te re per kete produkt.</h4>
+                    <h4 class="modal-title">Shto hyrje te re per artikullin : <strong>{{$product->code}}</strong>.</h4>
                 </div>
                 <div class="modal-body">
                     <form action="" id="add_entry_form" method="post" class="form-horizontal">
@@ -209,17 +209,17 @@
             <div class="modal-content" >
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Shto variacion te ri per kete produkt.</h4>
+                    <h4 class="modal-title">Shto variacion te ri per artikullin : <strong>{{$product->code}}</strong>.</h4>
                 </div>
                 <div class="modal-body">
                     <form action="" id="add_variation_form" method="post" class="form-horizontal">
                         {{csrf_field()}}
                         <div class="form-group">
-                            <label class="control-label col-md-3">Datea e Hyrjes
+                            <label class="control-label col-md-3">Data e Hyrjes
                                 <span class="required"> * </span>
                             </label>
                             <div class="col-md-9">
-                                <select class="form-control" name="entry">
+                                <select class="form-control" name="entry" id="entry_dropdown">
                                     <option value="">Zgjidh Daten e Hyrjes</option>
                                     @foreach($product->entries as $key=>$entry)
                                         <option value="{{$entry->id}}">{{Jenssegers\Date\Date::parse($entry->entry_date)->format('j M Y')}}</option>
@@ -288,7 +288,7 @@
                             <label class="control-label col-md-3">Shenim
                             </label>
                             <div class="col-md-9">
-                                <textarea class="wysihtml5 form-control" rows="6" name="note" data-error-container="#editor2_error" placeholder="Shenim per produktin"></textarea>
+                                <textarea class="wysihtml5 form-control" rows="6" name="note" data-error-container="#editor2_error" placeholder="Shenim per artikullin"></textarea>
                                 <div id="editor2_error"> </div>
                             </div>
                         </div>
@@ -391,6 +391,7 @@
                         if (data['error'] === true){error = 'error'}
                         else{
                             error = 'success';
+                            $('#entry_dropdown').append('<option value="' + data['id'] + '" selected>' + data['date'] + '</option>').trigger("change");
                             $('#entries_table').DataTable().row.add(data['row']).draw();
                             $('#entries_table tr:last').attr('id','idRow'+data['id']);
                             $('#add_entry_modal').modal('hide');
