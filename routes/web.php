@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit_product/{product}',array('as' => 'edit_product','uses' => 'ProductsController@edit'));
     Route::post('/update_product/{product}',array('as' => 'update_product','uses' => 'ProductsController@update'));
     Route::get('/delete_product/{product}',array('as' => 'delete_product','uses' => 'ProductsController@destroy'));
+    Route::get('/get_product_variations/{product}',array('as' => 'get_product_variations','uses' => 'ProductsController@get_product_variations'));
 
     /**************************************Orders Routes ****************************************/
     Route::get('/orders_archive',array('as' => 'orders_archive','uses' => 'OrdersController@index_archive'));
@@ -88,7 +89,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit_color/{color}',array('as' => 'edit_color','uses' => 'ColorController@edit'));
     Route::post('/update_color/{color}',array('as' => 'update_color','uses' => 'ColorController@update'));
     Route::get('/delete_color/{color}',array('as' => 'delete_color','uses' => 'ColorController@destroy'));
-
 
     /**************************************Product Entries Routes ****************************************/
     Route::get('/view_entry/{entry}',array('as' => 'view_entry','uses' => 'ProductEntryHistoryController@show'));
