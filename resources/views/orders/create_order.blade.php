@@ -7,10 +7,11 @@
     <link href="{{URL::asset('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{URL::asset('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{URL::asset('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" type="text/css"/>
-
     <link href="{{URL::asset('assets/global/plugins/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{URL::asset('assets/global/plugins/select2/css/select2-bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{URL::asset('assets/pages/css/invoice-2.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{URL::asset('assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css')}}" rel="stylesheet" type="text/css" />
+
 @endsection
 @section('content')
     <div class="page-content">
@@ -57,11 +58,16 @@
                                             <select id="product_dorpdown" class="form-control select2">
                                                 <option value="">Zgjidh Produtin</option>
                                                 @foreach($products as $product)
-                                                    <option value="{{$product->id}}" data-content="{{json_encode(['id'=> $product->id,'code'=> $product->code, 'price_total'=> $product->price_total ])}}">{{$product->code}} </option>
+                                                    <option value="{{$product->id}}" data-content="{{$product}}">{{$product->code}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
-
+                                        <div class="form-group">
+                                            <label class="control-label">Variacionet</label>
+                                            <select id="color_dropdown" name="color" class="bs-select form-control" data-show-subtext="true">
+                                                    <option value="" data-content="Color Name <span class='label color_dd' style='background-color:green;color:green'>.</span>"> </option>
+                                            </select>
+                                        </div>
                                         <div class="form-group">
                                             <label for="client_dropdown" class="control-label">Klienti</label>
                                             <div>
@@ -326,6 +332,7 @@
     <script src="{{URL::asset('assets/global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/global/plugins/jquery-validation/js/additional-methods.min.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js')}}" type="text/javascript"></script>
 @endsection
 
 @section('page_level_scripts_foot')
@@ -336,4 +343,5 @@
     <script src="{{URL::asset('assets/pages/scripts/components-select2.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/pages/scripts/form-validation.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/custom/printThis.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/pages/scripts/components-bootstrap-select.min.js')}}" type="text/javascript"></script>
 @endsection

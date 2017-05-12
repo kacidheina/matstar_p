@@ -44,6 +44,10 @@ class Product extends Model
         return $this->hasMany('App\Product_Variation', 'id_product');
     }
 
+     public function variations_simplified()
+    {
+        return $this->hasMany('App\Product_Variation', 'id_product')->select(array('id','id_color', 'size', 'stock', 'price_total'))->where('stock','>',0);
+    }
 
     public function category()
     {

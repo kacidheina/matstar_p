@@ -59,6 +59,7 @@
                                         <div class="dropdown">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Veprime<span class="caret"></span></button>
                                             <ul class="dropdown-menu">
+                                                <li><a href="{{url('view_product',$product->id)}}"><i class="fa fa-eye"></i>Detaje</a></li>
                                                 <li><a href="{{url('edit_product',$product->id)}}"><i class="fa fa-edit"></i>Ndrysho</a></li>
                                                 <li><a data-id = {{ $product->id }} class="delete_category" ><i class="fa fa-trash"></i>Fshij</a></li>
                                             </ul>
