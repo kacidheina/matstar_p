@@ -78,6 +78,7 @@ class OrdersController extends Controller
         $order->total_difference = $total_difference;
         $order->save();
 
+        return redirect()->route('view_order_invoice',$order);
     }
 
     /**

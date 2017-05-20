@@ -101,5 +101,4 @@
     <script src="{{URL::asset('assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js')}}" type="text/javascript"></script>
 @endsection
 @section('page_level_scripts_foot')
-    <script src="{{URL::asset('assets/pages/scripts/ecommerce-orders-view.min.js')}}" type="text/javascript"></script>
 @endsection
