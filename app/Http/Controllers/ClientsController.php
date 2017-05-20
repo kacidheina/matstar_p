@@ -80,8 +80,7 @@ class ClientsController extends Controller
      */
     public function show(Client $client)
     {
-        $client_debits = Client::with('debit')->get();
-        return view('clients.profil_client',['client' => $client,'client_debits' => $client_debits]);
+        return view('clients.profil_client',['client' => $client]);
     }
 
     /**

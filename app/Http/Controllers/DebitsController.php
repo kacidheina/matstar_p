@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\Story_Debts;
 use App\Client;
 use Illuminate\Http\Request;
@@ -28,7 +29,17 @@ class DebitsController extends Controller
      */
     public function index_client()
     {
-        //
+        $debts = Order::with('client')->where('status','in_debt')->get();
+        $grouped_variations = $debts->groupBy('id_client')->transform(function($item, $k) {
+                $obj = ['total_ordered' => $item->sum('order_total') ,'total_paid' =>  $item->sum('client_paid'),'total_debt' => $item->sum('order_total') - $item->sum('client_paid'),'client'=>$item[0]->client];
+                return $obj;
+        });
+
+
+        //return $grouped_variations;
+        //$debts = Order::with('client')->where('status','in_debt')->get();
+        //return ['debts'=>$debts];
+        return view('debts_client.debit_list',['debts'=>$grouped_variations]);
     }
 
     /**

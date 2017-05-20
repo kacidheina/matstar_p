@@ -48,3 +48,10 @@
 .invoice-content-2.bordered {
      border: 0; !important;
 }
+
+.profile-stat {
+    border: 0; !important;
+}
+.profile-sidebar-portlet{
+    margin-bottom: 0px;!important;
+}

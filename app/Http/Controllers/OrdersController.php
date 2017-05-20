@@ -72,7 +72,8 @@ class OrdersController extends Controller
             $order_total = $order_total + $order_item->price_total;
         }
 
-        if ($order_total > $request->client_paid){$order->status = 'in_debt';}
+        if ($order_total > $request->client_paid_final_form){$order->status = 'in_debt';}else{$order->status = 'paid';}
+
         $order->order_total = $order_total;
         $order->client_paid = $request->client_paid_final_form;
         $order->total_difference = $total_difference;
