@@ -38,5 +38,13 @@
 
 .color_dd{
     float:right;
-    width:50px;
+    width:75px;
+}
+
+.order_summary_box{
+    margin-top: 30px;
+}
+
+.invoice-content-2.bordered {
+     border: 0; !important;
 }

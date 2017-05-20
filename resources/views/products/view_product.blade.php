@@ -470,7 +470,6 @@
                     success: function (data) {
                         if (data['error'] === true){error = 'error'}else{
                             error = 'success';
-                            console.log(data);
                             $("#color_dropdown").append(' <option value="'+data.data.id+'" selected="" data-content="'+data.data.name+' <span class=\'label color_dd\' style=\'background-color:'+data.data.code+';color:'+data.data.code+'\'>.</span>"> </option>');
                             $("#color_dropdown").selectpicker("refresh");
                             $('#add_color_modal').modal('hide');
