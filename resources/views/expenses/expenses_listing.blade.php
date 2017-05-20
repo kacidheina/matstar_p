@@ -68,17 +68,38 @@
                                 <tr id="idRow{{$expense->id}}">
                                     <td>{{$expense->sum}}</td>
                                     <td>{{$expense->subject}}</td>
-                                    <td>{{$expense->date}}</td>
-                                    <td>@if($expense->status == 'done')<button class="btn btn-success">I shpenzuar</button> @else <button class="btn btn-danger">I planifikuar</button>@endif</td>
-                                    <td><p hidden>{{$expense->created_at}}</p> Nga: <b>{{$expense->creator->name}}</b> <br> Me: <b>{{date('g:i a, F j, Y',strtotime($expense->created_at))}}</b> </td>
-                                    <td><p hidden>{{$expense->updated_at}}</p> Nga: <b>@if($expense->user_modify_id != 0){{$expense->modifier->name}} @else I pa modifikuar @endif</b> <br> Me: <b>@if($expense->updated_at == '-0001-11-30 00:00:00')I pa modifikuar @else {{date('g:i a, F j, Y',strtotime($expense->updated_at))}}  @endif</b> </td>
+                                    <td>
+                                        @if($expense->date == \Carbon\Carbon::today()->format('Y-m-d'))
+                                            <button data-toggle="popover" data-trigger="hover" data-placement="top" title="Kujtese" data-content="Shpenzimi duhet kryer sot" class="btn btn-danger">{{$expense->date}}</button>
+                                        @else
+                                            {{$expense->date}}
+                                        @endif
+                                       </td>
+                                    <td>@if($expense->status == 'done')
+                                            <button class="btn btn-success">I shpenzuar</button> @else
+                                            <button class="btn btn-danger">I planifikuar</button>@endif</td>
+                                    <td><p hidden>{{$expense->created_at}}</p> Nga: <b>{{$expense->creator->name}}</b>
+                                        <br> Me: <b>{{date('g:i a, F j, Y',strtotime($expense->created_at))}}</b></td>
+                                    <td><p hidden>{{$expense->updated_at}}</p> Nga:
+                                        <b>@if($expense->user_modify_id != 0){{$expense->modifier->name}} @else I pa
+                                            modifikuar @endif</b> <br> Me:
+                                        <b>@if($expense->updated_at == '-0001-11-30 00:00:00')I pa
+                                            modifikuar @else {{date('g:i a, F j, Y',strtotime($expense->updated_at))}}  @endif</b>
+                                    </td>
                                     <td>
                                         <div class="dropdown">
-                                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Veprime<span class="caret"></span></button>
+                                            <button class="btn btn-default dropdown-toggle" type="button"
+                                                    data-toggle="dropdown">Veprime<span class="caret"></span></button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="show_descr_exp" data-href-descr="{{url('view_expenses',$expense->id)}}" data-id-get = {{ $expense->id }}  ><i class="fa fa-eye"></i>Shiko Shenim</a></li>
-                                                <li><a data-get-id="{{$expense->id}}" data-href="{{url('update_expenses',$expense->id)}}" class="modify_exp"><i class="fa fa-edit"></i>Ndrysho</a></li>
-                                                <li><a class="delete_expense" data-id = {{ $expense->id }}  ><i class="fa fa-trash"></i>Fshij</a></li>
+                                                <li><a class="show_descr_exp"
+                                                       data-href-descr="{{url('view_expenses',$expense->id)}}"
+                                                       data-id-get= {{ $expense->id }} ><i class="fa fa-eye"></i>Shiko
+                                                        Shenim</a></li>
+                                                <li><a data-get-id="{{$expense->id}}"
+                                                       data-href="{{url('update_expenses',$expense->id)}}"
+                                                       class="modify_exp"><i class="fa fa-edit"></i>Ndrysho</a></li>
+                                                <li><a class="delete_expense" data-id= {{ $expense->id }} ><i
+                                                                class="fa fa-trash"></i>Fshij</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -295,6 +316,9 @@
             });
 
         });
+
+
+            $('[data-toggle="popover"]').popover();
 
     </script>
 @endsection
