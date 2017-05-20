@@ -44,7 +44,6 @@ $("#add_client_form_modal").submit(function (e) {
             },
             error: function (data) {
                 notification_handler('error', data['message']);
-                console.log(data);
             }
         });
     }
@@ -52,8 +51,7 @@ $("#add_client_form_modal").submit(function (e) {
 });
 
 var shopping_cart = [];
-
-
+var selected_product_code;
 var empty_table_row = '<div class="empty_row"> <b>Nuk ka produkte.</b></div>';
 
 function manage_empty_row(cart) {
@@ -65,26 +63,45 @@ function manage_empty_row(cart) {
     }
 }
 
-function add_item_to_cart(id, code, price) {
+function add_item_to_cart(id, code, price,size,color,color_code,color_id) {
+    var was_found = false;
 
-    $('#shopping_cart_table').append(
-        '<tr id="item_' + id + '"> ' +
-        '<td class="cart_item_code">' + code + '</td>' +
-        '<td class="cart_item_price"><input type="text" style="text-align: center" class="col-md-12 cart_item_original_price" onkeyup="change_item_price(' + id + ',$(this).val())"  value="' + price + '" onkeypress="return isNumber(event)" ></td>' +
-        '<td><input type="text" style="text-align: center" class="col-md-12 cart_item_quantity" onkeyup="update_cart(' + id + ',$(this).val())" id="cart_item_quantity_' + id + '" data-value="1"  value="1" onkeypress="return isNumber(event)" ></td>' +
-        '<td class="cart_item_total" id="item_' + id + '_total">' + price + '</td>' +
-        '<td style="text-align:center;"><a class="btn btn-sm red cart_item_delete" onclick="remove_item_from_cart(' + id + ')" data-content="' + id + '"><i class="fa fa-trash"></i></a></td>' +
-        '</tr>');
+    console.log('searching for :'+id);
+    for (var i in shopping_cart) {
 
-    var total_cart_price = $('#cart_total_price');
+        console.log('found :'+shopping_cart[i].id);
+        if (shopping_cart[i].id === id) {
+            was_found = true;
+            break;
+        }
+        else
+        { was_found = false;}
+    }
+    console.log(was_found);
+    if (!was_found)
+    {
+        $('#shopping_cart_table').append(
+            '<tr id="item_' + id + '"> ' +
+            '<td class="cart_item_code">Kodi: <strong>' + code + '</strong><br>Numer: <strong>' + size + '</strong><br>Ngjyra: <strong>' + color + '</strong></td>' +
+            '<td class="cart_item_price"><input type="text" style="text-align: center" class="col-md-12 cart_item_original_price" onkeyup="change_item_price(\'' + id + '\',$(this).val())"  value="' + price + '" onkeypress="return isNumber(event)" ></td>' +
+            '<td><input type="text" style="text-align: center" class="col-md-12 cart_item_quantity" onkeyup="update_cart(\'' + id + '\',$(this).val())" id="cart_item_quantity_' + id + '" data-value="1"  value="1" onkeypress="return isNumber(event)" ></td>' +
+            '<td class="cart_item_total" id="item_' + id + '_total">' + price + '</td>' +
+            '<td style="text-align:center;"><a class="btn btn-sm red cart_item_delete" onclick="remove_item_from_cart(\''+id+'\')" data-content="' + id + '"><i class="fa fa-trash"></i></a></td>' +
+            '</tr>');
 
-    var total_cart_price_float = parseFloat(total_cart_price.text());
-    total_cart_price_float = parseFloat(price) + total_cart_price_float;
-    total_cart_price.text(total_cart_price_float.toFixed(2));
-    shopping_cart.push({'id': id, 'quantity': 1, 'price': Number(price), 'total': Number(price)});
+        var total_cart_price = $('#cart_total_price');
 
-    get_rest_debt($('#client_paid_input'));
-    manage_empty_row(shopping_cart);
+        var total_cart_price_float = parseFloat(total_cart_price.text());
+        total_cart_price_float = parseFloat(price) + total_cart_price_float;
+        total_cart_price.text(total_cart_price_float.toFixed(2));
+
+
+        shopping_cart.push({'id': id, 'quantity': 1, 'price': Number(price), 'total': Number(price), 'color': color_id, 'size': Number(size)});
+
+        get_rest_debt($('#client_paid_input'));
+        manage_empty_row(shopping_cart);
+    }
+    console.log(shopping_cart);
 }
 
 function get_rest_debt(element) {
@@ -93,14 +110,15 @@ function get_rest_debt(element) {
         cart_total = cart_total + Number(shopping_cart[y].total);
     }
     var payment = element.val();
+    $('#client_paid_final_form').val(Number(payment));
     var difference = Number(payment) - Number(cart_total);
 
     if (difference > 0) {
-        $('#cart_rest').html(difference);
+        $('#cart_rest').html(difference.toFixed(2));
         $('#cart_debit').html(0);
     }
     else {
-        $('#cart_debit').html(difference);
+        $('#cart_debit').html(difference.toFixed(2));
         $('#cart_rest').html(0);
     }
 
@@ -181,39 +199,70 @@ function update_cart(id, quantity) {
 
 
 $("#product_dorpdown").on('change', function () {
-    var id = $(this).select2().find(":selected").val();
+    // var id = $(this).select2().find(":selected").val();
+    var product_details = JSON.parse($(this).val());
+    selected_product_code = product_details['details']['code'];
+    var id = product_details.id;
     if(id != '')
     {
         $.ajax(
             {
-                url: super_path + '/add_client',
-                type: 'POST',
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: $(this).serialize(),
+                url: super_path + '/get_product_variations/'+id,
+                type: 'GET',
                 success: function (data) {
-                    if (data['error'] === true){error = 'error'}
-                    else{
-                        error = 'success';
-                        $('#entry_dropdown').append('<option value="' + data['id'] + '" selected>' + data['date'] + '</option>').trigger("change");
-                        $('#entries_table').DataTable().row.add(data['row']).draw();
-                        $('#entries_table tr:last').attr('id','idRow'+data['id']);
-                        $('#add_entry_modal').modal('hide');
+                    if (data['error'] != true)
+                    {
+                        var color_dd = $("#variation_dropdown");
+                        color_dd .empty();
+                        var data_array = $.map(data.data, function(value, index) {
+                            return [value];
+                        });
+
+
+                        for (var i = 0; i < data_array.length;i ++ )
+                        {
+                            for (var y = 0; y < data_array[i].length;y ++ )
+                            {
+                                var nested_array = $.map(data_array[i][y], function(value, index) {
+                                    return [value];
+                                });
+
+                                for (var z = 0; z < nested_array.length;z ++ )
+                                {   var color_code = nested_array[z].color_code;
+                                    color_dd.append(' <option  value="'+id+'-'+nested_array[z].size+'-'+color_code.replace(/^#+/i, '')+'"  data-special=\'{"color_id" : "'+nested_array[z].color_id+'","color" : "'+nested_array[z].color_name+'","color_code" : "'+nested_array[z].color_code+'","size" : "'+nested_array[z].size+'","price" : '+nested_array[z].total_price+'}\'  data-content="Numri: <strong>'+nested_array[z].size+'</strong> <br>Mbetur: <strong>'+nested_array[z].stock+'</strong> Cope <br> Ngjyra : <strong>'+nested_array[z].color_name+'</strong><br> Cmimi Mesatar : <strong>'+nested_array[z].total_price+'</strong> LEK <span class=\'label color_dd\' style=\'background-color:'+nested_array[z].color_code+';color:'+nested_array[z].color_code+'\'>.</span>"> </option>');
+                                    color_dd.selectpicker("refresh");
+                                }
+                            }
+                        }
                     }
-                    notification_handler(error, data['message']);
+                    else
+                    {
+                        notification_handler('error', data['message']);
+                    }
                 },
                 error:function () {
                     notification_handler('error', 'Dicka shkoi gabim. Ju lutem provoni perseri.');
                 }
             });
     }
-    //add_item_to_cart(data.id, data.code, data.price_total);
 });
 
 
-$("#submit_order").on('click', function () {
+function selectIdDecomposer(composed_id) {
+    var data =  composed_id.split("-");
+    return {prod_id:data[0], size:data[1], color:'#'+data[2]};
+}
 
-    $('#cart_details').val(JSON.stringify(shopping_cart));
-    $('#client_paid_final_form').val($('#cart_client_paid').val());
+$("#variation_dropdown").on('change',function(){
+    var selected = $('#variation_dropdown').find('option:selected').val();
+    var data = selectIdDecomposer(selected);
+    var details = JSON.parse($('#variation_dropdown').find('option:selected').attr('data-special'));
+    add_item_to_cart(selected, selected_product_code, details.price,details.size,details.color,details.color_code,details.color_id);
+});
+
+
+$("#submit_order").on('click', function (e) {
+
     if (shopping_cart.length === 0) {
         notification_handler('error', 'Ju nuk keni zgjedhur asnje produkt.');
     }
@@ -221,6 +270,7 @@ $("#submit_order").on('click', function () {
         notification_handler('error', 'Ju nuk keni zgjedhur klientin.');
     }
     else {
+        $('#cart_details').val(JSON.stringify(shopping_cart));
         $("#add_order_form").submit();
     }
 
@@ -243,3 +293,4 @@ function print_bill() {
         loadCSS: "../pages/css/invoice-2.min.css"  // path to additional css file - us an array [] for multiple
     });
 }
+

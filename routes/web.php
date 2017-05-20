@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
     /**************************************Orders Routes ****************************************/
     Route::get('/orders_archive',array('as' => 'orders_archive','uses' => 'OrdersController@index_archive'));
     Route::get('/view_order/{order}',array('as' => 'view_order','uses' => 'OrdersController@show'));
+    Route::get('/view_order_invoice/{order}',array('as' => 'view_order_invoice','uses' => 'OrdersController@showInvoice'));
     Route::get('/create_order',array('as' => 'create_order','uses' => 'OrdersController@create'));
     Route::post('/add_order',array('as' => 'add_order','uses' => 'OrdersController@store'));
     Route::get('/edit_order/{order}',array('as' => 'edit_order','uses' => 'OrdersController@edit'));
