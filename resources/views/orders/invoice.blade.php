@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title') Add New Product @endsection
+@section('title') Fatura @endsection
 @section('page_level_styles_head')
     <link href="{{URL::asset('assets/pages/css/invoice-2.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
@@ -31,7 +31,7 @@
             <div class="row invoice-cust-add">
                 <div class="col-xs-6">
                     <h2 class="invoice-title uppercase">Klienti</h2>
-                    <p class="invoice-desc">{{$order->client->name}} ({{$order->client->city}})</p>
+                    <p>Emer: <strong>{{$order->client->name}}</strong> <br>NIPT: <strong>{{$order->client->nipt}}</strong>  <br>Tel: <strong>{{$order->client->phone}}</strong> <br>Qyteti: <strong>{{$order->client->city}}</strong> </p>
                 </div>
                 <div class="col-xs-6">
                     <h2 class="invoice-title uppercase">Data e Faturimit</h2>
@@ -40,7 +40,7 @@
             </div>
             <div class="row invoice-body">
                 <div class="col-xs-12 table-responsive">
-{{--                    {{dump($order->orderItems)}}--}}
+                    {{--{{dump($order->orderItems)}}--}}
                     <table class="table table-hover">
                         <thead>
                         <tr>

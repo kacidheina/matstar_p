@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Debit;
-use App\Story_Clients_Debts;
+use App\Order;
 use App\Story_Debts;
 use App\Client;
 use Illuminate\Http\Request;
@@ -30,8 +29,17 @@ class DebitsController extends Controller
      */
     public function index_client()
     {
-        $clients_debts = Story_Clients_Debts::with('creator')->with('modifier')->get();
-        return view('debts.clients_debit_list',['clients_debts' => $clients_debts]);
+        $debts = Order::with('client')->where('status','in_debt')->get();
+        $grouped_variations = $debts->groupBy('id_client')->transform(function($item, $k) {
+                $obj = ['total_ordered' => $item->sum('order_total') ,'total_paid' =>  $item->sum('client_paid'),'total_debt' => $item->sum('order_total') - $item->sum('client_paid'),'client'=>$item[0]->client];
+                return $obj;
+        });
+
+
+        //return $grouped_variations;
+        //$debts = Order::with('client')->where('status','in_debt')->get();
+        //return ['debts'=>$debts];
+        return view('debts_client.debit_list',['debts'=>$grouped_variations]);
     }
 
     /**
@@ -41,7 +49,7 @@ class DebitsController extends Controller
      */
     public function create()
     {
-        return view('debts.add_debit');
+        //
     }
 
     /**
@@ -63,30 +71,7 @@ class DebitsController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'sum' => 'required',
-            'creditor_client' => 'required',
-            'dateDebt' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->with('error', 'Te dhenat nuk u futen ne formatin e duhur.');
-        }
-
-        $debit = new Story_Debts();
-        $debit->sum = $request->sum;
-        $debit->creditor_client = $request->creditor_client;
-        $debit->dateDebt = $request->dateDebt;
-        $debit->datePaymentClient = $request->datePaymentClient;
-        $debit->description = $request->description;
-        $debit->user_create_id = Auth::user()->id;
-        $debit->created_at = date("Y-m-d H:i:s");
-
-        if ($debit->save())
-        { return redirect()->route('debit_list')->with('success', 'Borxhi u shtua me sukses.');
-        }
-        else
-        {return redirect()->back()->with('error', 'Dicka shkoi gabim. Provoni perseri.');}
-
+        //
     }
 
     /**
@@ -166,16 +151,17 @@ class DebitsController extends Controller
             ]);
         if ($validator->fails()) {return response()->json(['error' => true ,'message' => 'Te dhenat nuk u futen ne formatin e duhur.']);}
 
+        if($request->description == ""){ $text = $story_debts->description;}else{$text = $request->description;}
         $story_debts->status = $request->status;
         $story_debts->datePaymentClient = $request->datepicker;
-        $story_debts->description = $request->description;
+        $story_debts->description = $text;
         $story_debts->user_modify_id = Auth::user()->id;
         $story_debts->updated_at = date("Y-m-d H:i:s");
 
         if ($story_debts->save())
         {return response()->json(['error' => false ,'type' => 'success' ,'message' => 'Borxhi u modifikua me sukses.' ,'data' => ['id' => $story_debts->id ,'status' => $story_debts->status,'description' => $story_debts->description,'datePaymentClient'=> $story_debts->datePaymentClient]]);}
         else
-        {return response()->json(['error' => true ,'type' => 'error' ,'message' => 'Dicka shkoi gabim. Provoni perseri.']);}
+        {return response()->json(['error' => true ,'message' => 'Dicka shkoi gabim. Provoni perseri.']);}
     }
 
     /**

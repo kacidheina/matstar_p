@@ -295,7 +295,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item @if($current_route == 'debits')  active open  @endif">
+                <li class="nav-item @if($current_route == 'debts_client')  active open  @endif">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="fa fa-usd"></i>
                         <span class="title">Debitet</span>
