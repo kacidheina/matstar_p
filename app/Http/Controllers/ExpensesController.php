@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Expenses;
 use Illuminate\Http\Request;
+use Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ExpensesController extends Controller
 {
@@ -25,7 +27,7 @@ class ExpensesController extends Controller
      */
     public function create()
     {
-        //
+        return view('expenses.add_expense');
     }
 
     /**
@@ -36,7 +38,30 @@ class ExpensesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'sum' => 'required',
+            'subject' => 'required',
+            'date' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', 'Te dhenat nuk u futen ne formatin e duhur.');
+        }
+
+        $expence = new Expenses();
+        $expence->sum = $request->sum;
+        $expence->subject = $request->subject;
+        $expence->date = $request->date;
+        $expence->note = $request->note;
+        $expence->user_create_id = Auth::user()->id;
+        $expence->created_at = date("Y-m-d H:i:s");
+        $expence->updated_at = "0000-00-00 00:00:00";
+
+        if ($expence->save())
+        { return redirect()->route('expenses_list')->with('success', 'Shpenzimi u shtua me sukses.');
+
+        }
+        else
+        {return redirect()->back()->with('error', 'Dicka shkoi gabim. Provoni perseri.');}
     }
 
     /**
@@ -47,7 +72,10 @@ class ExpensesController extends Controller
      */
     public function show(Expenses $expenses)
     {
-        //
+        if ($expenses->note != "")
+        {return response()->json(['error' => false ,'type' => 'success' ,'description' => $expenses->note]);}
+        else
+        {return response()->json(['error' => true ,'description' => 'Nuk ka asnje shenim per kete shpenzim']);}
     }
 
     /**
@@ -70,7 +98,24 @@ class ExpensesController extends Controller
      */
     public function update(Request $request, Expenses $expenses)
     {
-        //
+        $validator = Validator::make($request->all(),
+            [
+                'status' => 'required',
+                'date' => 'required',
+
+            ]);
+        if ($validator->fails()) {return response()->json(['error' => true ,'message' => 'Te dhenat nuk u futen ne formatin e duhur.']);}
+
+        $expenses->status = $request->status;
+        $expenses->date = $request->date;
+        $expenses->note = $request->description;
+        $expenses->user_modify_id = Auth::user()->id;
+        $expenses->updated_at = date("Y-m-d H:i:s");
+
+        if ($expenses->save())
+        {return response()->json(['error' => false ,'type' => 'success' ,'message' => 'Shpenzimi u modifikua me sukses.' ,'data' => ['id' => $expenses->id ,'status' => $expenses->status,'description' => $expenses->note,'date'=> $expenses->date]]);}
+        else
+        {return response()->json(['error' => true ,'type' => 'error' ,'message' => 'Dicka shkoi gabim. Provoni perseri.']);}
     }
 
     /**
@@ -81,6 +126,13 @@ class ExpensesController extends Controller
      */
     public function destroy(Expenses $expenses)
     {
-        //
+        $expenses->delete = 'yes';
+        $expenses->user_modify_id = Auth::user()->id;
+        $expenses->updated_at = date("Y-m-d H:i:s");
+
+        if ($expenses->save())
+        {return response()->json(['error' => 'false', 'message' => 'Shpenzimi u fshi me sukses']);}
+        else
+        {return response()->json(['error' => 'true', 'message' => 'Dicka shkoi gabim.Provojeni perseri']);}
     }
 }

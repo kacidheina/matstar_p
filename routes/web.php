@@ -72,7 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/view_client_debit/{debit}',array('as' => 'view_client_debit','uses' => 'DebitsController@show_client_debit'));
     Route::get('/create_debit',array('as' => 'create_debit','uses' => 'DebitsController@create'));
     Route::get('/create_client_debit/{client}',array('as' => 'create_client_debit','uses' => 'DebitsController@create_client_debit'));
-    Route::post('/add_debit',array('as' => 'add_debit','add_debit' => 'DebitsController@store'));
+    Route::post('/add_debit',array('as' => 'add_debit','uses' => 'DebitsController@store'));
     Route::post('/add_client_debit/{client}',array('as' => 'add_client_debit','uses' => 'DebitsController@store_client_debit'));
     Route::get('/edit_debit/{debit}',array('as' => 'edit_debit','uses' => 'DebitsController@edit'));
     Route::get('/edit_client_debit/{debit}',array('as' => 'edit_client_debit','uses' => 'DebitsController@edit_client_debit'));
@@ -115,12 +115,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     /**************************************Expenses Routes ****************************************/
 
-    Route::get('/expenses_list',array('as' => 'debit_list','uses' => 'ExpensesController@index'));
-    Route::get('/view_expenses/{expenses}',array('as' => 'view_debit','uses' => 'ExpensesController@show'));
-    Route::get('/create_expenses',array('as' => 'create_debit','uses' => 'ExpensesController@create'));
-    Route::post('/add_expenses',array('as' => 'add_debit','add_debit' => 'ExpensesController@store'));
-    Route::get('/edit_expenses/{expenses}',array('as' => 'edit_debit','uses' => 'ExpensesController@edit'));
-    Route::post('/update_expenses/{expenses}',array('as' => 'update_debit','uses' => 'ExpensesController@update'));
-    Route::get('/delete_expenses/{expenses}',array('as' => 'delete_debit','uses' => 'ExpensesController@destroy'));
+    Route::get('/expenses_list',array('as' => 'expenses_list','uses' => 'ExpensesController@index'));
+    Route::get('/view_expenses/{expenses}',array('as' => 'view_expenses','uses' => 'ExpensesController@show'));
+    Route::get('/create_expenses',array('as' => 'create_expenses','uses' => 'ExpensesController@create'));
+    Route::post('/add_expenses',array('as' => 'add_expenses','uses' => 'ExpensesController@store'));
+    Route::get('/edit_expenses/{expenses}',array('as' => 'edit_expenses','uses' => 'ExpensesController@edit'));
+    Route::post('/update_expenses/{expenses}',array('as' => 'update_expenses','uses' => 'ExpensesController@update'));
+    Route::get('/delete_expenses/{expenses}',array('as' => 'delete_expenses','uses' => 'ExpensesController@destroy'));
 
 });

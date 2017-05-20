@@ -79,7 +79,7 @@ class ProductsController extends Controller
     public function show(Product $product)
     {
         $colors = Color::get();
-        $value = ($colors->where('id',1))->toArray()[0]['name'];
+//        $value = ($colors->where('id',1))->toArray()[0]['name'];
 
 
         $variations_collection= collect($product->variations_simplified);

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Color extends Model
 {
+
+
+    public $table = 'colors';
     /**
      * The "booting" method of the model.
      *
