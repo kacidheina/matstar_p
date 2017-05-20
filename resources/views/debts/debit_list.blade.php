@@ -44,7 +44,11 @@
                             <i class="fa fa-cubes font-dark"></i>
                             <span class="caption-subject bold uppercase">Debitet e Dyqanit</span>
                         </div>
-                        <div class="tools"> </div>
+                        <div class="tools">
+                            <button id="sample_editable" data-href="{{url('create_debit')}}" class="btn sbold green"> Shto Debit
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover" id="debts_table">
@@ -69,7 +73,23 @@
                                     <td id="status{{$company_debt->id}}"> @if($company_debt->status == 'unpaid') <button class="btn btn-danger">PaPaguar</button> @else @if($company_debt->datePaymentClient != '0000-00-00 00:00:00')<button class="btn btn-success">I Paguar <br> Me :{{ $company_debt->datePaymentClient }}</button> @endif @endif</td>
                                     <td> {{$company_debt->dateDebt}} </td>
                                     <td><p hidden>{{$company_debt->created_at}}</p> Nga: <b>{{$company_debt->creator->name}}</b> <br> Me: <b>{{date('g:i a, F j, Y',strtotime($company_debt->created_at))}}</b> </td>
-                                    <td><p hidden>{{$company_debt->updated_at}}</p> Nga: <b>{{$company_debt->modifier->name}}</b> <br> Me: <b>{{date('g:i a, F j, Y',strtotime($company_debt->updated_at))}}</b> </td>
+                                    <td>
+                                        <p hidden>{{$company_debt->updated_at}}</p>
+                                        Nga:
+                                        @if($company_debt->modifier != null or $company_debt->modifier != 0)
+                                            <b>{{$company_debt->modifier->name}}</b>
+                                        @else
+                                            <b>Pa Modifikuar</b>
+                                        @endif
+
+                                        <br> Me:
+                                        @if($company_debt->updated_at != null or $company_debt->updated_at != "0000-00-00 00:00:00")
+                                            <b>{{date('g:i a, F j, Y',strtotime($company_debt->updated_at))}}</b>
+                                        @else
+                                            <b>Pa Modifikuar</b>
+                                        @endif
+
+                                    </td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Veprime<span class="caret"></span></button>
@@ -150,14 +170,14 @@
                                     <label class="control-label col-md-3">Shenim
                                     </label>
                                     <div class="col-md-9">
-                                        <textarea class="wysihtml5 form-control" rows="6" id="description" name="editor1" data-error-container="#editor1_error"></textarea>
+                                        <textarea class="form-control" rows="6" id="statusDescr" name="description" data-error-container="#editor1_error"></textarea>
                                         <div id="editor1_error"> </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">Mbyll</button>
-                                <button type="submit" class="btn green" id="save_changes">Ruaj</button>
+                                <button type="submit" class="btn green">Ruaj</button>
                             </div>
                         </form>
                     </div>
@@ -177,7 +197,6 @@
                 <div class="modal-body" id="modalBody"> </div>
                 <div class="modal-footer">
                     <button type="button" class="btn dark btn-outline" data-dismiss="modal">Mbyll</button>
-                    {{--<button type="button" class="btn green">Save changes</button>--}}
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -205,10 +224,15 @@
     <script src="{{URL::asset('assets/pages/scripts/table-datatables-colreorder.js')}}" type="text/javascript"></script>
     <script src="{{URL::asset('assets/pages/scripts/form-validation.min.js')}}" type="text/javascript"></script>
     <script>
+
+
+        $("#sample_editable").click(function () {
+            window.location = $(this).attr('data-href');
+        });
+
         $('.delete_debt').on('click', function () {
 
             var id = $(this).attr('data-id');
-            console.log(id);
            $('#confirm').modal({show:true}).on('click', '#delete', function (e) {
                 $.ajax(
                     {
@@ -233,43 +257,45 @@
 
         });
 
+        var path,id;
         $('.modify_debt').on('click', function () {
-            var path = $(this).attr('data-href');
-            var id = $(this).attr('data-get-id');
-            $('#basic').modal({show:true}).on('click', '#save_changes', function () {
-                var formData = {
-                    status:$("#status option:selected").val(),
-                    datepicker:$("input[name=datepicker]").val(),
-                    descr:$("textarea#description").val()
-                };
+             path = $(this).attr('data-href');
+             id = $(this).attr('data-get-id');
+            $('#basic').modal({show:true});
 
+        });
+
+             $("#add_payment_form_modal").submit( function (event) {
+                 event.preventDefault();
                 $.ajax({
                     type: 'POST',
                     url: path,
-                    data: formData,
-                    dataType: 'json',
+                    data: $(this).serialize(),
                     headers: {
                         'X-CSRF-TOKEN': $("meta[name=csrf-token]").attr("content")
                     },
                     success: function (data)
                     {
                         console.log(data);
-                        $('#basic').modal('hide');
 //                        notification_handler(false,data['message']);
-                        if(data.data['status'] === 'unpaid'){ var status = '<button class="btn btn-danger">PaPaguar</button>'}else{ status = '<button class="btn btn-success">I Paguar<br> Me : '+data.data['datePaymentClient']+' </button>'};
+                        if (data.type === "success") {
+
+                        $('#basic').modal('hide');
+                        if(data.data['status'] === 'unpaid'){ var status = '<button class="btn btn-danger">PaPaguar</button>'}else{ status = '<button class="btn btn-success">I Paguar<br> Me : '+data.data['datePaymentClient']+' </button>'}
                         $('#status'+id).html(status);
-
-                        $("#status option:selected").val("");
-                        $("input[name=datepicker]").val();
-
+                        document.getElementById("add_payment_form_modal").reset();
+                    }
+                        else{
+                            event.preventDefault();
+                        }
                     },
-                    error: function (data) {
+                    error: function (event) {
+                        event.preventDefault();
 //                        notification_handler(true,data['message']);
-                        console.log(data);
                     }
                 });
-            });
-        });
+             });
+
 
         $('.show_descr_debt').click(function()  {
             var url = $(this).attr('data-href-descr');

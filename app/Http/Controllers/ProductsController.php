@@ -78,7 +78,6 @@ class ProductsController extends Controller
      */
     public function show(Product $product)
     {
-
         $colors = Color::get();
         return  view('products.view_product', ['colors'=>$colors,'product' => $product->load('category', 'variations.color','variations.entry','variations.creator','variations.modifier', 'entries.creator','entries.modifier', 'modifier', 'creator')]);
     }
